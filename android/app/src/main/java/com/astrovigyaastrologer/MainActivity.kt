@@ -1,4 +1,4 @@
-package com.travel.travelapp
+package com.astrovigyaastrologer
 
 import android.os.Bundle
 import com.facebook.react.ReactActivity
@@ -14,7 +14,7 @@ class MainActivity : ReactActivity() {
     super.onCreate(savedInstanceState)
   }
 
-  override fun getMainComponentName(): String = "Group Travel"
+  override fun getMainComponentName(): String = "Astrovigya - Astrologer"
 
   override fun createReactActivityDelegate(): ReactActivityDelegate =
     DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)

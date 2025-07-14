@@ -134,6 +134,8 @@ const LoginScreen = ({ navigation }) => {
           "firebase_token": fcmToken,
           //"deviceid": deviceId,
         }
+        console.log(option)
+        console.log(API_URL)
         axios.post(`${API_URL}/login-otp`, option, {
           headers: {
             'Accept': 'application/json',

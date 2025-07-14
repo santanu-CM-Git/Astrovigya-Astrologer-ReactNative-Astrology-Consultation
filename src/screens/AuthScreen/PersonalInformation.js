@@ -14,7 +14,7 @@ import {
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import DocumentPicker from '@react-native-documents/picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 import InputField from '../../components/InputField';
 import CustomButton from '../../components/CustomButton';
 import { dateIcon, pagination1Img, plus, uploadImg, uploadPicImg, userPhoto } from '../../utils/Images';
@@ -125,26 +125,39 @@ const PersonalInformation = ({ navigation, route }) => {
 
   const pickDocument = async () => {
     try {
-      const result = await DocumentPicker.pick({
-        type: [DocumentPicker.types.allFiles],
-      });
+        const options = {
+            mediaType: 'photo',
+            includeBase64: false,
+            maxHeight: 2000,
+            maxWidth: 2000,
+        };
 
-      const pickedDocument = result[0];
-      setPickedDocument(pickedDocument);
-      setDocumentError('')
+        launchImageLibrary(options, (response) => {
+            if (response.didCancel) {
+                console.log('Document picker was cancelled');
+                return;
+            }
+            
+            if (response.errorMessage) {
+                console.log('ImagePicker Error: ', response.errorMessage);
+                handleAlert('Oops..', response.errorMessage);
+                setIsPicUploadLoading(false);
+                return;
+            }
+
+            if (response.assets && response.assets.length > 0) {
+                const pickedDocument = response.assets[0];
+                setPickedDocument(pickedDocument);
+                setDocumentError('');
+            }
+        });
 
     } catch (err) {
-      setIsPicUploadLoading(false);
-      if (DocumentPicker.isCancel(err)) {
-        console.log('Document picker was cancelled');
-      } else if (err.response) {
-        console.log('Error response:', err.response.data?.response?.records);
-        handleAlert('Oops..', err.response.data?.message);
-      } else {
+        setIsPicUploadLoading(false);
         console.error('Error picking document', err);
-      }
+        handleAlert('Oops..', 'An error occurred while picking the image');
     }
-  };
+};
 
 
   const submitForm = async() => {

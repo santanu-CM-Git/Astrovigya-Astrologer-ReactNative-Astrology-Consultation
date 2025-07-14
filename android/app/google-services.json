@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "323164360540",
-    "project_id": "grouptourproject",
-    "storage_bucket": "grouptourproject.firebasestorage.app"
+    "project_number": "508178411282",
+    "project_id": "astrovigya-ae294",
+    "storage_bucket": "astrovigya-ae294.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:323164360540:android:dc4c05a5cc012a47963b99",
+        "mobilesdk_app_id": "1:508178411282:android:3ed8c052e6efba03be0dcb",
         "android_client_info": {
-          "package_name": "com.travel.travelapp"
+          "package_name": "com.astrovigyaastrologer"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDIjUHoULegSoVa1aUjTF327vD2r4frkEI"
+          "current_key": "AIzaSyCXvdPvDsbI656T7OUQR0mSgoWFTWe5ZK0"
         }
       ],
       "services": {
@@ -26,15 +26,15 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:323164360540:android:17d10beab826470d963b99",
+        "mobilesdk_app_id": "1:508178411282:android:8b690bdb057f2f9ebe0dcb",
         "android_client_info": {
-          "package_name": "com.travel.travelappagent"
+          "package_name": "com.astrovigyaastrologer"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDIjUHoULegSoVa1aUjTF327vD2r4frkEI"
+          "current_key": "AIzaSyCXvdPvDsbI656T7OUQR0mSgoWFTWe5ZK0"
         }
       ],
       "services": {

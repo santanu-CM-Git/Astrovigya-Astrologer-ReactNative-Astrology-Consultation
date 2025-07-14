@@ -1,0 +1,277 @@
+{
+    "translation": {
+        "onboard": {
+            "text": "Welcome to Astrovigya!",
+            "desc": "Whether you're a seasoned astrologer or just starting your journey, we offer the tools and insights you need to explore the mysteries of the universe."
+        },
+        "buttons": {
+            "signIn": "Sign In"
+        },
+        "login": {
+            "mobileno": "Mobile Number",
+            "welcometext": "Leading Online Astrology App",
+            "welcomesesc": "For Astrologers Use Only",
+            "mobileplaceholder": "Enter Mobile Number",
+            "emailid": "Email ID",
+            "emailplaceholder": "Enter Email Id",
+            "password": "Password",
+            "passwordplaceholder": "Enter Password",
+            "sentotp": "Send OTP",
+            "exploreastrologer": "Explore Astrovigya",
+            "emaillogin": "Email Login",
+            "mobilelogin": "Mobile Login",
+            "termstext1": "By continue you agree to our",
+            "termstext2": "Terms & Conditions",
+            "termstext3": "and",
+            "termstext4": "Privacy Policy",
+            "Pleaseentera10digitnumber":"Please enter a 10-digit number.",
+            "PleaseentercorrectEmailId":"Please enter correct Email Id",
+            "PleaseenterMobileno":"Please enter Mobile no",
+            "OTPsenttoyourmobileno":"OTP sent to your mobile no",
+            "PleaseenterEmailId":"Please enter Email Id.",
+            "PleaseenteraPassword.":"Please enter a Password.",
+            "Pleasewaitforadminapproval":"Please wait for admin approval"
+
+        },
+        "otp": {
+            "header": "Verify your number",
+            "subheader": "A 4 digit OTP has been sent to your phone number",
+            "didnotreceived": "Didn’t receive OTP?",
+            "resendotp": "Resend OTP",
+            "TheOTPdoesnotmatchPleaseenterthecorrectOTP":"The OTP does not match. Please enter the correct OTP."
+
+        },
+        "personalinformation": {
+            "header": "Registration Form",
+            "subheader": "Enter the details below so we can get to know and serve you better",
+            "uploadphoto": "Upload your photo",
+            "uploadphoto2": "Upload your professional photo",
+            "fullname": "Full Name",
+            "enterfullname": "Enter Full Name",
+            "displayname": "Display Name",
+            "enterdisplayname": "Enter Display Name",
+            "email": "Email Id",
+            "mobile": "Mobile Number",
+            "mobileplaceholder": "Mobile number",
+            "dob": "Date of Birth",
+            "gender": "Gender",
+            "selectgender": "Select Gender",
+            "savenext": "Save & Next",
+            "back":"Back",
+            "yearexp": "Years of Experience",
+            "selectyear": "Select year",
+            "lang": "Language",
+            "picklang": "Pick Language",
+            "searchlang": "Search Language...",
+            "areaspecialization": "Area of Specializations",
+            "pickspec": "Pick Specializations",
+            "searchspec": "Search Specializations...",
+            "shortbio": "Short Bio",
+            "writebio": "Write your bio...",
+            "certifications": "Certifications",
+            "addnew": "Add New",
+            "remove": "Remove",
+            "writecertificate": "Write your certification name",
+            "uploadcertificate": "Upload Certification Document",
+            "upcertificate": "Upload Certificate",
+            "govid":"Government ID",
+            "selectgovid":"Select Government ID",
+            "search":"Search...",
+            "uploadgovid":"Upload Government ID",
+            "proofaddress":"Proof of Address",
+            "selectproofadd": "Select Proof Adress",
+            "uploadproofadd":"Upload Address Proof",
+            "sociallink":"Social Media Links",
+            "fblink":"Facebook Link",
+            "instalink":"Instagram Link",
+            "linkedinlink":"Linkedin Link",
+            "youtubelink":"Youtube Link",
+            "astrologertext":"Astrologers need to give 15 mins of free session per new user",
+            "astrologertext2": "50% will be deducted as platform fee",
+            "completeacc": "Complete Account",
+            "Pleaseselectoneprofilepic":"Please select one profile pic.",
+            "PleaseenterName":"Please enter Name.",
+            "PleaseenterDisplayName":"Please enter Display Name.",
+            "PleaseenterEmailId":"Please enter Email Id.",
+            "PleaseenterMobileNo":"Please enter Mobile No.",
+            "PleaseenterDateofbirth":"Please enter Date of birth.",
+            "Pleasechooseyourgender":"Please choose your gender.",
+            "Pleasechooseexperience.":"Please choose experience.",
+            "Pleasechooselanguage":"Please choose language.",
+            "Pleasechoosespecializations.":"Please choose specializations.",
+            "PleasechooseGovernmentid":"Please choose Government id.",
+            "PleaseuploadGovernmentid.":"Please upload Government id.",
+            "PleasechooseAddressproof.":"Please choose Address proof.",
+            "PleaseuploadAddressproof.":"Please upload Address proof."
+        },
+        "stepindicator":{
+            "personalinfo":"Personal Info",
+            "basicdetails":"Basic Details",
+            "otherdetails":"Other Details"
+        },
+        "thankyou":{
+            "RegistrationSuccessfullyDone":"Registration Successfully Done",
+            "ThankYou":"Thank You",
+            "desc":"For registering with us! Our team will reach out to you within 7 working days"
+        },
+        "sidemenu": {
+            "home": "Home",
+            "Availability": "Availability",
+            "Earning": "Earning",
+            "MyServices": "My Services",
+            "ClientManagement": "Client Management",
+            "Reports": "Reports",
+            "BankAccount": "Bank Account",
+            "Settings":"Settings"
+        },
+        "CustomHeader":{
+            "CurrentAvailability":"Current Availability"
+        },
+        "CustomDrawer":{
+            "ViewProfile":"View Profile"
+        },
+        "tab":{
+            "Home":"Home",
+            "Earning":"Earning",
+            "MyServices":"My Services",
+            "Clients":"Clients",
+            "Availability":"Availability"
+        },
+        "home":{
+            "paymentinfo":"Add Payment Information to Complete Your Account Setup.",
+            "todaysprogress":"Today’s Progress",
+            "Earnings":"Earnings",
+            "NoofSessions":"No of Sessions",
+            "Sessions":"Sessions",
+            "NoofRemedies":"No of Remedies",
+            "Availability":"Availability",
+            "CallConsultancy":"Call Consultancy",
+            "ChatConsultancy":"Chat Consultancy",
+            "UpcomingAppointment":"Upcoming Appointment",
+            "SeeAll":"See All"
+        },
+        "settings":{
+            "settings":"Settings",
+            "SelectLanguage":"Select Language",
+            "PrivacyPolicy":"Privacy Policy",
+            "AboutUs":"About Us",
+            "Terms&Conditions":"Terms & Conditions",
+            "LogOut":"Log Out",
+            "DeleteMyAccount":"Delete My Account",
+            "logoutText":"Are you sure want to log out?",
+            "No":"No",
+            "Yes":"Yes",
+            "deleteText":"Once deleted, your account cannot be recovered and all your saved chats, call history and any other personal information will be lost. Do you still wish to continue?"
+        },
+        "Earnings":{
+            "Earnings":"Earnings",
+            "EarningBreakdown":"Earning Breakdown",
+            "GrossEarning":"Gross Earning",
+            "PlatformFee":"Platform Fee",
+            "NetPayable":"Net Payable",
+            "WithdrawMoney":"Withdraw Money",
+            "Astrology":"Astrology",
+            "Remedies":"Remedies",
+            "Nodatafound":"No data found"
+        },
+        "Myservice":{
+            "MyServices":"My Services",
+            "OnlineConsultation":"Online Consultation",
+            "rate":"Call/Chat Rate ( Rupees/Min)",
+            "Remedies":"Remedies",
+            "RemediesRate":"Remedies Rate",
+            "AddNewService":"Add New Service",
+            "feeText":"50% will be deducted as platform fee",
+            "Submit":"Submit"
+        },
+        "ClientManagement":{
+            "ClientManagement":"Client Management",
+            "Consultation":"Consultation",
+            "Remedies":"Remedies",
+            "Noconsultdatafound":"No consult data found",
+            "Upcoming":"Upcoming",
+            "Previous":"Previous"
+        },
+        "Availability":{
+            "Availability":"Availability",
+            "SetYourAvailability":"Set Your Availability"
+        },
+        "Reports":{
+            "Reports":"Reports",
+            "Performance":"Performance",
+            "TotalEarnings":"Total Earnings",
+            "NoofRemedies":"No of Remedies",
+            "NoofSessions":"No of Sessions",
+            "TotalSessionTime":"Total Session Time",
+            "OverallRating":"Overall Rating",
+            "Selectyourdate":"Select your date",
+            "Ok":"Ok"
+        },
+        "Review":{
+            "WriteReview":"Write Review",
+            "Howwasyourexperiencewith":"How was your experience with",
+            "VeryBad":"Very Bad",
+            "Excellent":"Excellent",
+            "Enteryourreview":"Enter your review...",
+            "SubmitReview":"Submit Review",
+            "Skip":"Skip"
+        },
+        "Nocallscreen":{
+            "NoClientsyet":"No Clients yet!",
+            "desc":"Once you connect with a client, the list will be displayed here."
+        },
+        "chathistory":{
+            "ConsultAgain":"Consult Again"
+        },
+        "Profile":{
+            "Profile":"Profile",
+            "msg":"If you want any update/change in profile then please write a mail to the support team"
+        },
+        "UploadBankDetails":{
+            "AddBankAccountDetails":"Add Bank Account Details",
+            "FullNameAsPerBank":"Full Name As Per Bank",
+            "EnterFullName":"Enter Full Name",
+            "BankName":"Bank Name",
+            "EnterBankName":"Enter Bank Name",
+            "AccountNumber":"Account Number",
+            "EnterBankAccountNumber":"Enter Bank Account Number",
+            "ConfirmAccountNumber":"Confirm Account Number",
+            "ConfirmBankAccountNumber":"Confirm Bank Account Number",
+            "IFSCCode":"IFSC Code",
+            "EnterIFSCCode":"Enter IFSC Code",
+            "UPIId":"UPI Id",
+            "EnterUPIId":"Enter UPI Id",
+            "SaveBankAccount":"Save Bank Account",
+            "PleaseenterFullname":"Please enter Full name.",
+            "PleaseenterBankname":"Please enter Bank name.",
+            "PleaseenterAccountno":"Please enter Account no.",
+            "PleaserepeatyourAccountno":"Please repeat your Account no.",
+            "AccountnoandConfirmAccountnoshouldmatch":"Account no and Confirm Account no should match.",
+            "PleaseenterIFSCcode":"Please enter IFSC code.",
+            "PleaseenterUPIId":"Please enter UPI Id."
+        },
+        "Withdraw":{
+            "Withdraw":"Withdraw",
+            "Availableamounttowithdraw":"Available amount to withdraw",
+            "EnterAmount":"Enter Amount",
+            "Withdrawmoneyto":"Withdraw money to",
+            "Edit":"Edit",
+            "WithdrawMoney":"Withdraw Money",
+            "WithdrawTransaction":"Withdraw Transaction",
+            "Notransactionfound":"No transaction found",
+            "WithdrawRequest":"Withdraw Request",
+            "Pending":"Pending",
+            "Approved":"Approved",
+            "Release":"Release",
+            "Reject":"Reject",
+            "Youneedtoaddbankdetailsfirst":"You need to add bank details first",
+            "Pleaseenteramountfirst":"Please enter amount first",
+            "YourAvailablebalanceis":"Your Available balance is"
+        },
+        "WithdrawSuccess":{
+            "WithdrawRequestSuccessful":"Withdraw Request Successful!",
+            "desc":" Your withdrawal request has been processed successfully! The funds have been transferred to your designated account. Please check your account balance to confirm the transaction.",
+            "BacktoHome":"Back to Home"
+        }
+    }
+}

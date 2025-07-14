@@ -1,0 +1,275 @@
+{
+    "translation": {
+        "onboard": {
+            "text": "Astrovigya में आपका स्वागत है!",
+            "desc": "चाहे आप एक अनुभवी ज्योतिषी हों या अपने यात्रा की शुरुआत कर रहे हों, हम आपको ब्रह्मांड के रहस्यों की खोज के लिए आवश्यक उपकरण और जानकारी प्रदान करते हैं।"
+        },
+        "buttons": {
+            "signIn": "साइन इन करें"
+        },
+        "login": {
+            "mobileno": "मोबाइल नंबर",
+            "welcometext": "अग्रणी ऑनलाइन ज्योतिष ऐप",
+            "welcomesesc": "केवल ज्योतिषियों के लिए उपयोग करें",
+            "mobileplaceholder": "मोबाइल नंबर दर्ज करें",
+            "emailid": "ईमेल आईडी",
+            "emailplaceholder": "ईमेल आईडी दर्ज करें",
+            "password": "पासवर्ड",
+            "passwordplaceholder": "पास वर्ड दर्ज करें",
+            "sentotp": "OTP भेजें",
+            "exploreastrologer": "एस्ट्रोविज्ञा का अन्वेषण करें",
+            "emaillogin": "ईमेल लॉगिन",
+            "mobilelogin": "मोबाइल लॉगिन",
+            "termstext1": "जारी रखें आप हमारी बात से सहमत हैं",
+            "termstext2": "नियम एवं शर्तें",
+            "termstext3": "और",
+            "termstext4": "गोपनीयता नीति",
+            "Pleaseentera10digitnumber": "कृपया 10-अंकों का नंबर दर्ज करें।",
+            "PleaseentercorrectEmailId": "कृपया सही ईमेल आईडी दर्ज करें।",
+            "PleaseenterMobileno": "कृपया मोबाइल नंबर दर्ज करें।",
+            "OTPsenttoyourmobileno": "ओटीपी आपके मोबाइल नंबर पर भेजा गया।",
+            "PleaseenterEmailId": "कृपया ईमेल आईडी दर्ज करें।",
+            "PleaseenteraPassword.": "कृपया पासवर्ड दर्ज करें।",
+            "Pleasewaitforadminapproval": "कृपया व्यवस्थापक की स्वीकृति की प्रतीक्षा करें।"
+        },
+        "otp": {
+            "header": "अपना नंबर सत्यापित करें",
+            "subheader": "आपके फोन नंबर पर 4 अंकों का ओटीपी भेजा गया है",
+            "didnotreceived": "OTP प्राप्त नहीं हुआ?",
+            "resendotp": "OTP पुनः भेजें",
+            "TheOTPdoesnotmatchPleaseenterthecorrectOTP": "The OTP does not match. Please enter the correct OTP."
+        },
+        "personalinformation": {
+            "header": "पंजीकरण फॉर्म",
+            "subheader": "हम आपको जान सकें और बेहतर सेवा दे सकें इसके लिए नीचे दिए गए विवरण दर्ज करें",
+            "uploadphoto": "अपना फोटो अपलोड करें",
+            "uploadphoto2": "अपना पेशेवर फोटो अपलोड करें",
+            "fullname": "पूरा नाम",
+            "enterfullname": "पूरा नाम दर्ज करें",
+            "displayname": "प्रदर्शन नाम",
+            "enterdisplayname": "प्रदर्शन नाम दर्ज करें",
+            "email": "ईमेल आईडी",
+            "mobile": "मोबाइल नंबर",
+            "mobileplaceholder": "मोबाइल नंबर",
+            "dob": "जन्म तिथि",
+            "gender": "लिंग",
+            "selectgender": "लिंग चुनें",
+            "savenext": "सहेजें और आगे बढ़ें",
+            "back": "पीछे",
+            "yearexp": "अनुभव के वर्ष",
+            "selectyear": "वर्ष चुनें",
+            "lang": "भाषा",
+            "picklang": "भाषा चुनें",
+            "searchlang": "भाषा खोजें...",
+            "areaspecialization": "विशेषज्ञता का क्षेत्र",
+            "pickspec": "विशेषज्ञता चुनें",
+            "searchspec": "विशेषज्ञता खोजें...",
+            "shortbio": "संक्षिप्त जीवनी",
+            "writebio": "अपनी जीवनी लिखें...",
+            "certifications": "प्रमाण पत्र",
+            "addnew": "नया जोड़ें",
+            "remove": "हटाएं",
+            "writecertificate": "प्रमाण पत्र का नाम लिखें",
+            "uploadcertificate": "प्रमाण पत्र दस्तावेज़ अपलोड करें",
+            "upcertificate": "प्रमाण पत्र अपलोड करें",
+            "govid": "सरकारी पहचान पत्र",
+            "selectgovid": "सरकारी पहचान पत्र चुनें",
+            "search": "खोजें...",
+            "uploadgovid": "सरकारी पहचान पत्र अपलोड करें",
+            "proofaddress": "पता प्रमाण",
+            "selectproofadd": "पता प्रमाण चुनें",
+            "uploadproofadd": "पता प्रमाण अपलोड करें",
+            "sociallink": "सोशल मीडिया लिंक",
+            "fblink": "फेसबुक लिंक",
+            "instalink": "इंस्टाग्राम लिंक",
+            "linkedinlink": "लिंक्डइन लिंक",
+            "youtubelink": "यूट्यूब लिंक",
+            "astrologertext": "ज्योतिषियों को नए उपयोगकर्ता के लिए 15 मिनट का मुफ्त सत्र देना होगा",
+            "astrologertext2": "मंच शुल्क के रूप में 50% कटौती की जाएगी",
+            "completeacc": "खाता पूर्ण करें",
+            "Pleaseselectoneprofilepic": "कृपया एक प्रोफ़ाइल चित्र चुनें।",
+            "PleaseenterName": "कृपया नाम दर्ज करें।",
+            "PleaseenterDisplayName": "कृपया प्रदर्शन नाम दर्ज करें।",
+            "PleaseenterEmailId": "कृपया ईमेल आईडी दर्ज करें।",
+            "PleaseenterMobileNo": "कृपया मोबाइल नंबर दर्ज करें।",
+            "PleaseenterDateofbirth": "कृपया जन्मतिथि दर्ज करें।",
+            "Pleasechooseyourgender": "कृपया अपना लिंग चुनें।",
+            "Pleasechooseexperience.": "कृपया अनुभव चुनें।",
+            "Pleasechooselanguage": "कृपया भाषा चुनें।",
+            "Pleasechoosespecializations.": "कृपया विशेषीकरण चुनें।",
+            "PleasechooseGovernmentid": "कृपया सरकार द्वारा जारी पहचान पत्र चुनें।",
+            "PleaseuploadGovernmentid.": "कृपया सरकार द्वारा जारी पहचान पत्र अपलोड करें।",
+            "PleasechooseAddressproof.": "कृपया पता प्रमाण चुनें।",
+            "PleaseuploadAddressproof.": "कृपया पता प्रमाण अपलोड करें।"
+        },
+        "stepindicator": {
+            "personalinfo": "व्यक्तिगत जानकारी",
+            "basicdetails": "मूल विवरण",
+            "otherdetails": "अन्य विवरण"
+        },
+        "thankyou": {
+            "RegistrationSuccessfullyDone": "पंजीकरण सफलतापूर्वक पूर्ण हुआ",
+            "ThankYou": "धन्यवाद",
+            "desc": "हमारे साथ पंजीकरण करने के लिए! हमारी टीम आपसे 7 कार्य दिवसों के भीतर संपर्क करेगी"
+        },
+        "sidemenu": {
+            "home": "होम",
+            "Availability": "उपलब्धता",
+            "Earning": "आय",
+            "MyServices": "मेरी सेवाएं",
+            "ClientManagement": "ग्राहक प्रबंधन",
+            "Reports": "रिपोर्ट्स",
+            "BankAccount": "बैंक खाता",
+            "Settings": "सेटिंग्स"
+        },
+        "CustomHeader": {
+            "CurrentAvailability": "वर्तमान उपलब्धता"
+        },
+        "CustomDrawer": {
+            "ViewProfile": "प्रोफ़ाइल देखें"
+        },
+        "tab": {
+            "Home": "होम",
+            "Earning": "आमदनी",
+            "MyServices": "मेरी सेवाएं",
+            "Clients": "ग्राहक",
+            "Availability": "उपलब्धता"
+        },
+        "home": {
+            "paymentinfo": "अपने खाता सेटअप को पूरा करने के लिए भुगतान जानकारी जोड़ें।",
+            "todaysprogress": "आज की प्रगति",
+            "Earnings": "आय",
+            "NoofSessions": "सत्रों की संख्या",
+            "Sessions": "सत्र",
+            "NoofRemedies": "उपायों की संख्या",
+            "Availability": "उपलब्धता",
+            "CallConsultancy": "कॉल परामर्श",
+            "ChatConsultancy": "चैट परामर्श",
+            "UpcomingAppointment": "आगामी अपॉइंटमेंट",
+            "SeeAll": "सभी देखें"
+        },
+        "settings": {
+            "settings": "सेटिंग्स",
+            "SelectLanguage": "भाषा चुनें",
+            "PrivacyPolicy": "गोपनीयता नीति",
+            "AboutUs": "हमारे बारे में",
+            "Terms&Conditions": "नियम और शर्तें",
+            "LogOut": "लॉग आउट",
+            "DeleteMyAccount": "मेरा खाता हटाएं",
+            "logoutText": "क्या आप वाकई लॉग आउट करना चाहते हैं?",
+            "No": "नहीं",
+            "Yes": "हां",
+            "deleteText": "एक बार हटाए जाने के बाद, आपका खाता पुनर्प्राप्त नहीं किया जा सकेगा और आपकी सभी सहेजी गई चैट, कॉल इतिहास और अन्य व्यक्तिगत जानकारी खो जाएगी। क्या आप अभी भी जारी रखना चाहते हैं?"
+        },
+        "Earnings": {
+            "Earnings": "आय",
+            "EarningBreakdown": "आय का विवरण",
+            "GrossEarning": "सकल आय",
+            "PlatformFee": "प्लेटफॉर्म शुल्क",
+            "NetPayable": "शुद्ध देय राशि",
+            "WithdrawMoney": "पैसे निकालें",
+            "Astrology": "ज्योतिष",
+            "Remedies": "उपाय",
+            "Nodatafound": "कोई डेटा नहीं मिला"
+        },
+        "Myservice": {
+            "MyServices": "मेरी सेवाएँ",
+            "OnlineConsultation": "ऑनलाइन परामर्श",
+            "rate": "कॉल/चैट दर (रुपये/मिनट)",
+            "Remedies": "उपाय",
+            "RemediesRate": "उपाय दर",
+            "AddNewService": "नई सेवा जोड़ें",
+            "feeText": "50% प्लेटफॉर्म शुल्क के रूप में कटौती की जाएगी",
+            "Submit": "सबमिट करें"
+        },
+        "ClientManagement": {
+            "ClientManagement": "क्लाइंट प्रबंधन",
+            "Consultation": "परामर्श",
+            "Remedies": "उपाय",
+            "Noconsultdatafound": "कोई परामर्श डेटा नहीं मिला",
+            "Upcoming": "आगामी",
+            "Previous": "पूर्व"
+        },
+        "Availability": {
+            "Availability": "उपलब्धता",
+            "SetYourAvailability": "अपनी उपलब्धता सेट करें"
+        },
+        "Reports": {
+            "Reports": "रिपोर्ट्स",
+            "Performance": "प्रदर्शन",
+            "TotalEarnings": "कुल आय",
+            "NoofRemedies": "उपायों की संख्या",
+            "NoofSessions": "सत्रों की संख्या",
+            "TotalSessionTime": "कुल सत्र समय",
+            "OverallRating": "कुल रेटिंग",
+            "Selectyourdate": "अपनी तारीख चुनें",
+            "Ok": "ठीक है"
+        },
+        "Review": {
+            "WriteReview": "समीक्षा लिखें",
+            "Howwasyourexperiencewith": "आपका अनुभव कैसा था",
+            "VeryBad": "बहुत बुरा",
+            "Excellent": "उत्तम",
+            "Enteryourreview": "अपनी समीक्षा दर्ज करें...",
+            "SubmitReview": "समीक्षा सबमिट करें",
+            "Skip": "छोड़ें"
+        },
+        "Nocallscreen": {
+            "NoClientsyet": "अभी तक कोई क्लाइंट नहीं!",
+            "desc": "एक बार जब आप किसी क्लाइंट से जुड़ते हैं, तो सूची यहां प्रदर्शित की जाएगी।"
+        },
+        "chathistory": {
+            "ConsultAgain": "फिर से परामर्श करें"
+        },
+        "Profile": {
+            "Profile": "प्रोफ़ाइल",
+            "msg": "यदि आप प्रोफ़ाइल में कोई अपडेट/परिवर्तन चाहते हैं तो कृपया सहायता टीम को मेल लिखें"
+        },
+        "UploadBankDetails": {
+            "AddBankAccountDetails": "बैंक खाता विवरण जोड़ें",
+            "FullNameAsPerBank": "बैंक के अनुसार पूरा नाम",
+            "EnterFullName": "पूरा नाम दर्ज करें",
+            "BankName": "बैंक का नाम",
+            "EnterBankName": "बैंक का नाम दर्ज करें",
+            "AccountNumber": "खाता संख्या",
+            "EnterBankAccountNumber": "बैंक खाता संख्या दर्ज करें",
+            "ConfirmAccountNumber": "खाता संख्या की पुष्टि करें",
+            "ConfirmBankAccountNumber": "बैंक खाता संख्या की पुष्टि करें",
+            "IFSCCode": "आईएफएससी कोड",
+            "EnterIFSCCode": "आईएफएससी कोड दर्ज करें",
+            "UPIId": "यूपीआई आईडी",
+            "EnterUPIId": "यूपीआई आईडी दर्ज करें",
+            "SaveBankAccount": "बैंक खाता सहेजें",
+            "PleaseenterFullname": "कृपया पूरा नाम दर्ज करें।",
+            "PleaseenterBankname": "कृपया बैंक का नाम दर्ज करें।",
+            "PleaseenterAccountno": "कृपया खाता संख्या दर्ज करें।",
+            "PleaserepeatyourAccountno": "कृपया अपनी खाता संख्या दोहराएं।",
+            "AccountnoandConfirmAccountnoshouldmatch": "खाता संख्या और पुष्टि खाता संख्या मेल खाना चाहिए।",
+            "PleaseenterIFSCcode": "कृपया आईएफएससी कोड दर्ज करें।",
+            "PleaseenterUPIId": "कृपया यूपीआई आईडी दर्ज करें।"
+        },
+        "Withdraw": {
+            "Withdraw": "निकासी",
+            "Availableamounttowithdraw": "निकासी के लिए उपलब्ध राशि",
+            "EnterAmount": "राशि दर्ज करें",
+            "Withdrawmoneyto": "धन निकासी करें",
+            "Edit": "संपादित करें",
+            "WithdrawMoney": "धन निकासी करें",
+            "WithdrawTransaction": "निकासी लेन-देन",
+            "Notransactionfound": "कोई लेन-देन नहीं मिला",
+            "WithdrawRequest": "निकासी अनुरोध",
+            "Pending": "लंबित",
+            "Approved": "स्वीकृत",
+            "Release": "रिलीज़",
+            "Reject": "अस्वीकृत",
+            "Youneedtoaddbankdetailsfirst": "आपको पहले बैंक विवरण जोड़ने की आवश्यकता है",
+            "Pleaseenteramountfirst": "कृपया पहले राशि दर्ज करें",
+            "YourAvailablebalanceis": "आपकी उपलब्ध शेष राशि है"
+        },
+        "WithdrawSuccess": {
+            "WithdrawRequestSuccessful": "निकासी अनुरोध सफल!",
+            "desc": "आपका निकासी अनुरोध सफलतापूर्वक संसाधित कर दिया गया है! धनराशि आपके निर्दिष्ट खाते में स्थानांतरित कर दी गई है। कृपया लेन-देन की पुष्टि के लिए अपने खाते की शेष राशि जांचें।",
+            "BacktoHome": "होम पर वापस जाएं"
+        }
+    }
+}

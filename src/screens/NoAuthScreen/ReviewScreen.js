@@ -127,7 +127,7 @@ const ReviewScreen = ({ navigation, route }) => {
                             disabled={false}
                             maxStars={5}
                             rating={starCount}
-                            selectedStar={(rating) => setStarCount(rating)}
+                            onChange={(rating) => setStarCount(rating)}
                             fullStarColor={'#FB7401'}
                             starSize={25}
                             starStyle={styles.eachStar}

@@ -172,6 +172,7 @@ const EarningScreen = ({ navigation }) => {
             style={styles.tabBar}
             labelStyle={styles.label}
             inactiveColor='#8B939D'
+            activeColor='#FB7401'
         />
     );
     useEffect(() => {

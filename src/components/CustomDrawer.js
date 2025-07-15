@@ -150,9 +150,11 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     height: responsiveHeight(21),
+    width:responsiveWidth(100),
     paddingLeft: responsiveWidth(5),
     justifyContent: 'center',
-    marginTop: -responsiveHeight(1)
+    marginTop: -responsiveHeight(2),
+    marginLeft: -responsiveWidth(3)
   },
   profileDetailsContainer: {
     flexDirection: 'row',

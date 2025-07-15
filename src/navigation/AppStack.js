@@ -17,7 +17,7 @@ import UploadSessionSummary from '../screens/NoAuthScreen/UploadSessionSummary';
 import AvailabilityScreen from '../screens/NoAuthScreen/AvailabilityScreen';
 import EarningScreen from '../screens/NoAuthScreen/EarningScreen';
 import TestPage from '../screens/NoAuthScreen/TestPage';
-import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { responsiveFontSize, responsiveWidth } from 'react-native-responsive-dimensions';
 import ReportScreen from '../screens/NoAuthScreen/ReportScreen';
 import SettingsScreen from '../screens/NoAuthScreen/SettingsScreen';
 import ReviewScreen from '../screens/NoAuthScreen/ReviewScreen';
@@ -39,7 +39,7 @@ const AuthStack = () => {
         drawerActiveTintColor: '#2D2D2D',
         drawerInactiveTintColor: '#949494',
         drawerLabelStyle: {
-          marginLeft: -25,
+          marginLeft: 0,
           fontFamily: 'PlusJakartaSans-Medium',
           fontSize: responsiveFontSize(1.8),
         },
@@ -51,7 +51,7 @@ const AuthStack = () => {
         options={{
           drawerIcon: ({ color }) => (
             // <Ionicons name="home-outline" size={22} color={color} />
-            <Image source={homeImg} style={{ width: 25, height: 25, marginRight: 5 }} color={color} />
+            <Image source={homeImg} style={{ width: 25, height: 25, marginRight: responsiveWidth(5) }} color={color} />
           ),
         }}
       />
@@ -61,7 +61,7 @@ const AuthStack = () => {
         options={{
           drawerIcon: ({ color }) => (
             // <Ionicons name="home-outline" size={22} color={color} />
-            <Image source={availabilityBlackImg} style={{ width: 25, height: 25, marginRight: 5 }} color={color} />
+            <Image source={availabilityBlackImg} style={{ width: 25, height: 25, marginRight: responsiveWidth(5) }} color={color} />
           ),
         }}
       />
@@ -71,7 +71,7 @@ const AuthStack = () => {
         options={{
           drawerIcon: ({ color }) => (
             // <Ionicons name="home-outline" size={22} color={color} />
-            <Image source={earningBlackImg} style={{ width: 25, height: 25, marginRight: 5 }} color={color} />
+            <Image source={earningBlackImg} style={{ width: 25, height: 25, marginRight: responsiveWidth(5) }} color={color} />
           ),
         }}
       />
@@ -81,7 +81,7 @@ const AuthStack = () => {
         options={{
           drawerIcon: ({ color }) => (
             // <Ionicons name="home-outline" size={22} color={color} />
-            <Image source={availabilityIconImg} style={{ width: 25, height: 25, marginRight: 5 }} color={color} />
+            <Image source={availabilityIconImg} style={{ width: 25, height: 25, marginRight: responsiveWidth(5) }} color={color} />
           ),
         }}
       />
@@ -91,7 +91,7 @@ const AuthStack = () => {
         options={{
           drawerIcon: ({ color }) => (
             // <Ionicons name="home-outline" size={22} color={color} />
-            <Image source={clientIconImg} style={{ width: 25, height: 25, marginRight: 5 }} color={color} />
+            <Image source={clientIconImg} style={{ width: 25, height: 25, marginRight: responsiveWidth(5) }} color={color} />
           ),
         }}
       />
@@ -101,7 +101,7 @@ const AuthStack = () => {
         options={{
           drawerIcon: ({ color }) => (
             // <Ionicons name="home-outline" size={22} color={color} />
-            <Image source={reportIcon} style={{ width: 25, height: 25, marginRight: 5 }} color={color} />
+            <Image source={reportIcon} style={{ width: 25, height: 25, marginRight: responsiveWidth(5) }} color={color} />
           ),
         }}
       />
@@ -141,7 +141,7 @@ const AuthStack = () => {
         options={{
           drawerIcon: ({ color }) => (
             // <Ionicons name="settings-outline" size={22} color={color} />
-            <Image source={bankIcon} style={{ width: 25, height: 25, marginRight: 5 }} color={color} />
+            <Image source={bankIcon} style={{ width: 25, height: 25, marginRight: responsiveWidth(5) }} color={color} />
           ),
         }}
       />
@@ -151,7 +151,7 @@ const AuthStack = () => {
         options={{
           drawerIcon: ({ color }) => (
             // <Ionicons name="settings-outline" size={22} color={color} />
-            <Image source={settingsIcon} style={{ width: 25, height: 25, marginRight: 5 }} color={color} />
+            <Image source={settingsIcon} style={{ width: 25, height: 25, marginRight: responsiveWidth(5) }} color={color} />
           ),
         }}
       />

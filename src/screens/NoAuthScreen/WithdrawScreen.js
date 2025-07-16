@@ -13,14 +13,15 @@ import moment from 'moment';
 import axios from 'axios';
 import Loader from '../../utils/Loader';
 import { API_URL } from '@env'
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { TouchableOpacity } from 'react-native';
 import Toast from 'react-native-toast-message';
 import { withTranslation, useTranslation } from 'react-i18next';
 
 
-const WithdrawScreen = ({ navigation }) => {
+const WithdrawScreen = ({  }) => {
+    const navigation = useNavigation();
     const { t, i18n } = useTranslation();
     const [isLoading, setIsLoading] = useState(true)
     const [availableWithdrawAmount, setAvailableWithdrawAmount] = useState(0)

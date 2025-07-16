@@ -29,6 +29,7 @@ import Modal from "react-native-modal";
 import Icon from 'react-native-vector-icons/Entypo';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 const items = [
     { id: '92iijs7yta', name: 'Ondo' },
     { id: 'a0s0a8ssbsd', name: 'Ogun' },
@@ -56,7 +57,8 @@ const dataMonth = [
     { label: '03', value: '03' },
 ];
 
-const UploadSessionSummary = ({ navigation, route }) => {
+const UploadSessionSummary = ({ route }) => {
+    const navigation = useNavigation();
     const [firstname, setFirstname] = useState(route?.params?.pname);
     const [firstNameError, setFirstNameError] = useState('')
     const [summary, setSummary] = useState('');

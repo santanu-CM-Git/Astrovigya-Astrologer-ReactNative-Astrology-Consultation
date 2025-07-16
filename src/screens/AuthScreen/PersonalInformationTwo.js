@@ -30,8 +30,11 @@ import RNDateTimePicker from '@react-native-community/datetimepicker'
 import StepIndicator from '../../components/StepIndicator';
 import { withTranslation, useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
-const PersonalInformationTwo = ({ navigation, route }) => {
+
+const PersonalInformationTwo = ({ route }) => {
+  const navigation = useNavigation();
   const [currentStep, setCurrentStep] = useState(2)
   const { t, i18n } = useTranslation();
   const [langvalue, setLangValue] = useState('en');

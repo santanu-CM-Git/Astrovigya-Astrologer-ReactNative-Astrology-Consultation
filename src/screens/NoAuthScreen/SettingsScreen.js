@@ -9,8 +9,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../../components/CustomButton';
 import { AuthContext } from '../../context/AuthContext';
 import { withTranslation, useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = ({  }) => {
+    const navigation = useNavigation();
     const { t, i18n } = useTranslation();
     const { logout } = useContext(AuthContext);
     const [isLoading, setIsLoading] = useState(false);

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useRef, useEffect } from 'react';
 import {
     Image,
@@ -9,7 +10,8 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-const SplashScreen = ({ navigation }) => {
+const SplashScreen = ({  }) => {
+    const navigation = useNavigation();
     const windowHeight = Dimensions.get('window').height;
     const moveAnim = useRef(new Animated.Value(-windowHeight)).current; // Start from off-screen top
     const fadeAnim = useRef(new Animated.Value(0)).current;

@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useRef, useEffect } from 'react';
 import {
     SafeAreaView,
@@ -10,7 +11,8 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-const SplashScreen = ({ navigation }) => {
+const SplashScreen = ({  }) => {
+    const navigation = useNavigation();
     const moveAnim = useRef(new Animated.Value(0)).current;
     const fadeAnim = useRef(new Animated.Value(0)).current;
 

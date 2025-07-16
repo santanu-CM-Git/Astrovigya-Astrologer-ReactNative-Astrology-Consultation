@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { SafeAreaView, View, Text, TouchableOpacity, Image, BackHandler } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Thankyou from '../..//assets/images/misc/Thankyou.svg';
 import Logo from '../..//assets/images/misc/logo.svg'
@@ -10,7 +10,8 @@ import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-nat
 import { acceptImg } from '../../utils/Images';
 import { withTranslation, useTranslation } from 'react-i18next';
 
-const ThankYouScreen = ({ navigation }) => {
+const ThankYouScreen = ({  }) => {
+  const navigation = useNavigation();
   const { t, i18n } = useTranslation();
   useFocusEffect(
     useCallback(() => {

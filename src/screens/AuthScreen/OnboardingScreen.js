@@ -7,13 +7,15 @@ import CustomButton from '../../components/CustomButton';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { withTranslation, useTranslation } from 'react-i18next';
 import { Dropdown } from 'react-native-element-dropdown';
+import { useNavigation } from '@react-navigation/native';
 
 const language = [
   { label: 'English', value: 'en' },
   { label: 'हिंदी', value: 'hi' }
 ];
 
-const OnboardingScreen = ({ navigation }) => {
+const OnboardingScreen = ({  }) => {
+  const navigation = useNavigation();
   const { t, i18n } = useTranslation();
   const [langvalue, setLangValue] = useState('en');
   const [isLangFocus, setLangIsFocus] = useState(false);

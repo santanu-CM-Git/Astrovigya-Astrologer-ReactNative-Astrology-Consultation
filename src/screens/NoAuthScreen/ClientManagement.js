@@ -13,13 +13,14 @@ import moment from 'moment';
 import axios from 'axios';
 import Loader from '../../utils/Loader';
 import { API_URL } from '@env'
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import SwitchSelector from "react-native-switch-selector";
 import Tooltip from 'react-native-walkthrough-tooltip';
 import { withTranslation, useTranslation } from 'react-i18next';
 
 const renderConsultation = ({ item, navigation }) => (
+
     <View style={styles.chatItemWrapper}>
         <View style={styles.itemContainerForChat}>
             {/* <Image source={{ uri: item.image }} style={styles.avatar} /> */}
@@ -218,7 +219,8 @@ const renderScene = (activeTab, setActiveTab, tooltipVisible, setTooltipVisible,
 };
 // const initialLayout = { width: Dimensions.get('window').width };
 
-const ClientManagement = ({ navigation }) => {
+const ClientManagement = ({  }) => {
+    const navigation = useNavigation();
     const { t, i18n } = useTranslation();
     const layout = Dimensions.get('window');
     const [isLoading, setIsLoading] = useState(true)

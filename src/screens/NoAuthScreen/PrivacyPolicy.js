@@ -30,12 +30,13 @@ import CustomHeader from '../../components/CustomHeader';
 import data from '../../model/data'
 import CustomButton from '../../components/CustomButton';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from '@react-navigation/native';
 const BannerWidth = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(BannerWidth * 0.7)
 const { height, width } = Dimensions.get('screen')
 
-export default function PrivacyPolicy({ navigation }) {
-
+export default function PrivacyPolicy({  }) {
+    const navigation = useNavigation();
     const dispatch = useDispatch();
     const { data: products, status } = useSelector(state => state.products)
     const { userInfo } = useContext(AuthContext)

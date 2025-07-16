@@ -14,12 +14,13 @@ import moment from 'moment';
 import axios from 'axios';
 import Loader from '../../utils/Loader';
 import { API_URL } from '@env'
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 
 
 
-const OrderSummary = ({ navigation, route }) => {
+const OrderSummary = ({  route }) => {
+    const navigation = useNavigation();
     const [isLoading, setIsLoading] = useState(false)
     const [details, setDetails] = useState(route?.params?.details)
 

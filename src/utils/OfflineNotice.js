@@ -6,7 +6,7 @@ import { responsiveHeight } from 'react-native-responsive-dimensions';
 const { width } = Dimensions.get('window');
 
 
-export default function OfflineNotice({ navigation }) {
+export default function OfflineNotice({  }) {
 
     const [isConnected, setIsConnected] = useState(true)
 

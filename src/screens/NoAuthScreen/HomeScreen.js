@@ -35,7 +35,7 @@ import CustomHeader from '../../components/CustomHeader';
 import Carousel from 'react-native-snap-carousel';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API_URL } from '@env'
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { Dropdown } from 'react-native-element-dropdown';
 import messaging from '@react-native-firebase/messaging';
 import LinearGradient from 'react-native-linear-gradient';
@@ -45,7 +45,8 @@ import ChatRequestModal from '../../components/ChatRequestModal';
 import notifee, { EventType } from '@notifee/react-native';
 import { withTranslation, useTranslation } from 'react-i18next';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({  }) => {
+  const navigation = useNavigation();
   const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const { data: products, status } = useSelector(state => state.products)

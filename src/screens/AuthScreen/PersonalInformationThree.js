@@ -30,6 +30,7 @@ import CheckBox from '@react-native-community/checkbox';
 import StepIndicator from '../../components/StepIndicator';
 import { withTranslation, useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 // const dataAddressProof = [
 //   { label: 'Male', value: 'Male' },
@@ -49,7 +50,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 //   { label: '10', value: '10' },
 // ];
 
-const PersonalInformationThree = ({ navigation, route }) => {
+const PersonalInformationThree = ({ route }) => {
+  const navigation = useNavigation();
   const { t, i18n } = useTranslation();
   const [langvalue, setLangValue] = useState('en');
   const [currentStep, setCurrentStep] = useState(3)

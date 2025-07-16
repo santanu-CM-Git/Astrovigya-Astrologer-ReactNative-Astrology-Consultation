@@ -21,9 +21,11 @@ import Loader from '../../utils/Loader';
 import Toast from 'react-native-toast-message';
 import { withTranslation, useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 // import OTPVerify from 'react-native-otp-verify';
 
-const OtpScreen = ({ navigation, route }) => {
+const OtpScreen = ({ route }) => {
+    const navigation = useNavigation();
     const { t, i18n } = useTranslation();
     const [langvalue, setLangValue] = useState('en');
 

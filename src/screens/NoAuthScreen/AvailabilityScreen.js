@@ -17,7 +17,7 @@ import axios from 'axios';
 import { API_URL } from '@env'
 import Toast from 'react-native-toast-message';
 import Loader from '../../utils/Loader';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { TouchableOpacity } from 'react-native';
 import { withTranslation, useTranslation } from 'react-i18next';
@@ -35,8 +35,8 @@ const data = [
     { label: 'November', value: 'November' },
     { label: 'December', value: 'December' },
 ];
-const AvailabilityScreen = ({ navigation }) => {
-
+const AvailabilityScreen = ({  }) => {
+    const navigation = useNavigation();
     const { t, i18n } = useTranslation();
     const [isLoading, setIsLoading] = useState(false)
     const [value, setValue] = useState('');

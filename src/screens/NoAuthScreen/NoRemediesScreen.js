@@ -5,8 +5,10 @@ import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-nat
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { nocallImg, nochatImg, noremediesImg, notificationImg, notifyImg } from '../../utils/Images'
 import { withTranslation, useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native'
 
-const NoRemediesScreen = ({ navigation }) => {
+const NoRemediesScreen = ({  }) => {
+    const navigation = useNavigation();
     const { t, i18n } = useTranslation();
     return (
         <SafeAreaView style={styles.Container}>

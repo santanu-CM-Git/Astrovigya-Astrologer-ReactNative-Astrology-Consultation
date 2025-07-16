@@ -29,13 +29,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { orImg } from '../../utils/Images';
 import Toast from 'react-native-toast-message';
 import { withTranslation, useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
 const BannerWidth = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(BannerWidth * 0.7)
 const { height, width } = Dimensions.get('screen')
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({  }) => {
   const { t, i18n } = useTranslation();
+  const navigation = useNavigation();
   const [langvalue, setLangValue] = useState('en');
   const [phone, setPhone] = useState('');
   const [mobileError, setMobileError] = useState('')

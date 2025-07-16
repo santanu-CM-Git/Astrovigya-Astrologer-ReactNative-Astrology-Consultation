@@ -29,7 +29,7 @@ import MultiSelect from 'react-native-multiple-select';
 import { Dropdown } from 'react-native-element-dropdown';
 import Modal from "react-native-modal";
 import Icon from 'react-native-vector-icons/Entypo';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { withTranslation, useTranslation } from 'react-i18next';
 
@@ -56,7 +56,8 @@ const dataGovId = [
   { label: '10', value: '10' },
 ];
 
-const ProfileScreen = ({ navigation, route }) => {
+const ProfileScreen = ({  route }) => {
+  const navigation = useNavigation();
   const [currentStep, setCurrentStep] = useState(1)
   const { t, i18n } = useTranslation();
   const [langvalue, setLangValue] = useState('en');

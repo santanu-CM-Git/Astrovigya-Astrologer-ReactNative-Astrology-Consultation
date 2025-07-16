@@ -31,6 +31,7 @@ import StepIndicator from '../../components/StepIndicator';
 import { withTranslation, useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment-timezone';
+import { useNavigation } from '@react-navigation/native';
 
 const dataGender = [
   { label: 'Male', value: 'Male' },
@@ -38,7 +39,8 @@ const dataGender = [
   { label: 'Others', value: 'Others' }
 ];
 
-const PersonalInformation = ({ navigation, route }) => {
+const PersonalInformation = ({ route }) => {
+  const navigation = useNavigation();
   const [currentStep, setCurrentStep] = useState(1)
   const { t, i18n } = useTranslation();
   const [langvalue, setLangValue] = useState('en');

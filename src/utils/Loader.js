@@ -5,7 +5,7 @@ import {
     StyleSheet
 } from 'react-native';
 
-export default function Loader({ navigation }) {
+export default function Loader({  }) {
     return (
         <View style={styles.Container}>
             <ActivityIndicator

@@ -14,7 +14,7 @@ import moment from 'moment';
 import axios from 'axios';
 import Loader from '../../utils/Loader';
 import { API_URL } from '@env'
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import LinearGradient from 'react-native-linear-gradient';
 import { withTranslation, useTranslation } from 'react-i18next';
@@ -27,7 +27,8 @@ const data = [
 ];
 
 
-const ReportScreen = ({ navigation }) => {
+const ReportScreen = ({  }) => {
+    const navigation = useNavigation();
     const { t, i18n } = useTranslation();
     const [isLoading, setIsLoading] = useState(false)
     const [value, setValue] = useState('1');

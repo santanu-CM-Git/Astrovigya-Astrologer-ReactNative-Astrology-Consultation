@@ -13,12 +13,13 @@ import moment from 'moment';
 import axios from 'axios';
 import Loader from '../../utils/Loader';
 import { API_URL } from '@env'
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { withTranslation, useTranslation } from 'react-i18next';
 
 
-const WithdrawSuccess = ({ navigation }) => {
+const WithdrawSuccess = ({  }) => {
+    const navigation = useNavigation();
     const { t, i18n } = useTranslation();
     const [isLoading, setIsLoading] = useState(false)
     // const slideAnim = useRef(new Animated.Value(-200)).current;

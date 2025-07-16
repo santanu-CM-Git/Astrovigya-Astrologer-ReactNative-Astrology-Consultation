@@ -28,12 +28,14 @@ import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ForgotPass from '../..//assets/images/misc/forgotPass.svg';
 import Toast from 'react-native-toast-message';
+import { useNavigation } from '@react-navigation/native';
 
 const BannerWidth = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(BannerWidth * 0.7)
 const { height, width } = Dimensions.get('screen')
 
-const ForgotPassword = ({ navigation }) => {
+const ForgotPassword = ({  }) => {
+    const navigation = useNavigation();
     const [inputText, setinputText] = useState('');
     const [inputTextError, setinputTextError] = useState('')
     const [isLoading, setIsLoading] = useState(false)

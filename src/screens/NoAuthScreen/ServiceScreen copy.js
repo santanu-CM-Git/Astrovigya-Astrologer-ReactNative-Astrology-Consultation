@@ -18,10 +18,10 @@ import { Dropdown } from 'react-native-element-dropdown';
 import CheckBox from '@react-native-community/checkbox';
 import Loader from '../../utils/Loader';
 import InputField from '../../components/InputField';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
-const ServiceScreen = ({ navigation }) => {
-
+const ServiceScreen = ({  }) => {
+    const navigation = useNavigation();
     const [isLoading, setIsLoading] = useState(true)
     const [rate, setRate] = useState('')
     const [toggleCheckBox, setToggleCheckBox] = useState(true)

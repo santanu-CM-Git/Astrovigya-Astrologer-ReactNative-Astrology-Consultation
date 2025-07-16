@@ -17,7 +17,7 @@ import axios from 'axios';
 import { API_URL } from '@env'
 import Toast from 'react-native-toast-message';
 import Loader from '../../utils/Loader';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 const data = [
     { label: 'January', value: 'January' },
     { label: 'February', value: 'February' },
@@ -32,8 +32,8 @@ const data = [
     { label: 'November', value: 'November' },
     { label: 'December', value: 'December' },
 ];
-const AvailabilityScreen = ({ navigation }) => {
-
+const AvailabilityScreen = ({  }) => {
+    const navigation = useNavigation();
     const [isLoading, setIsLoading] = useState(false)
     const [value, setValue] = useState('');
     const [isFocus, setIsFocus] = useState(false);

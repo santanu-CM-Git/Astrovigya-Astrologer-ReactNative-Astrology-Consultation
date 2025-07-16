@@ -6,7 +6,7 @@ import { GreenTick, audiooffIcon, audioonIcon, callIcon, chatImg, filesendImg, s
 import { GiftedChat, InputToolbar, Bubble, Send, Composer } from 'react-native-gifted-chat'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import InChatFileTransfer from '../../components/InChatFileTransfer';
-import { TabActions, useRoute } from '@react-navigation/native';
+import { TabActions, useNavigation, useRoute } from '@react-navigation/native';
 import firestore, { endBefore } from '@react-native-firebase/firestore'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import messaging from '@react-native-firebase/messaging';
@@ -23,7 +23,8 @@ import CustomHeader from '../../components/CustomHeader'
 
 
 
-const ChatHistory = ({ navigation, route }) => {
+const ChatHistory = ({ route }) => {
+  const navigation = useNavigation();
   const { t, i18n } = useTranslation(); 
   const routepage = useRoute();
 

@@ -15,9 +15,10 @@ import CustomButton from '../../components/CustomButton';
 import Toast from 'react-native-toast-message';
 import { userPhoto } from '../../utils/Images';
 import { withTranslation, useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
-const ReviewScreen = ({ navigation, route }) => {
-
+const ReviewScreen = ({ route }) => {
+    const navigation = useNavigation();
     const { t, i18n } = useTranslation();
     const [walletHistory, setWalletHistory] = React.useState([])
     const [isLoading, setIsLoading] = useState(false)

@@ -29,10 +29,11 @@ import Modal from "react-native-modal";
 import Icon from 'react-native-vector-icons/Entypo';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { withTranslation, useTranslation } from 'react-i18next';
 
-const UploadBankDetails = ({ navigation, route }) => {
+const UploadBankDetails = ({ route }) => {
+    const navigation = useNavigation();
     const { t, i18n } = useTranslation();
     const [firstname, setFirstname] = useState('');
     const [firstNameError, setFirstNameError] = useState('')

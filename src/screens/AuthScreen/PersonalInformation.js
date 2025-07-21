@@ -14,7 +14,7 @@ import {
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {launchImageLibrary} from 'react-native-image-picker';
+import DocumentPicker from 'react-native-document-picker';
 import InputField from '../../components/InputField';
 import CustomButton from '../../components/CustomButton';
 import { dateIcon, pagination1Img, plus, uploadImg, uploadPicImg, userPhoto } from '../../utils/Images';
@@ -126,6 +126,7 @@ const PersonalInformation = ({ route }) => {
   }
 
   const pickDocument = async () => {
+    console.log('pickDocument called');
     try {
         const options = {
             mediaType: 'photo',
@@ -134,24 +135,23 @@ const PersonalInformation = ({ route }) => {
             maxWidth: 2000,
         };
 
-        launchImageLibrary(options, (response) => {
-            if (response.didCancel) {
-                console.log('Document picker was cancelled');
-                return;
-            }
-            
-            if (response.errorMessage) {
-                console.log('ImagePicker Error: ', response.errorMessage);
-                handleAlert('Oops..', response.errorMessage);
-                setIsPicUploadLoading(false);
-                return;
-            }
-
-            if (response.assets && response.assets.length > 0) {
-                const pickedDocument = response.assets[0];
+        DocumentPicker.pick({
+            type: DocumentPicker.types.images,
+            copyTo: 'cachesDirectory',
+        }).then(response => {
+            if (response.length > 0) {
+                const pickedDocument = response[0];
                 setPickedDocument(pickedDocument);
                 setDocumentError('');
             }
+        }).catch(err => {
+            if (DocumentPicker.isCancel(err)) {
+                console.log('Document picker was cancelled');
+                return;
+            }
+            console.log('DocumentPicker Error: ', err);
+            handleAlert('Oops..', err.message);
+            setIsPicUploadLoading(false);
         });
 
     } catch (err) {

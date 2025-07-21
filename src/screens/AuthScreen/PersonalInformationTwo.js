@@ -252,12 +252,14 @@ const PersonalInformationTwo = ({ route }) => {
       formData.append("specializations", selectedItemsSpecializations);
       formData.append("short_bio", bio);
       certifications.forEach((certificate, index) => {
-        formData.append(`certificate[${index}][certification_name]`, certificate.name);
-        formData.append(`certificate[${index}][certification_pic]`, {
-          uri: certificate.document.uri,
-          type: certificate.document.type || 'image/jpeg',
-          name: certificate.document.name || `certification_${index}.jpg`,
-        });
+        if (certificate.name && certificate.document) {
+          formData.append(`certificate[${index}][certification_name]`, certificate.name);
+          formData.append(`certificate[${index}][certification_pic]`, {
+            uri: certificate.document.uri,
+            type: certificate.document.type || 'image/jpeg',
+            name: certificate.document.fileName || `certification_${index}.jpg`,
+          });
+        }
       });
       console.log(JSON.stringify(formData))
       console.log(route?.params?.token);

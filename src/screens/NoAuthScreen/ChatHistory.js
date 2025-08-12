@@ -9,7 +9,6 @@ import InChatFileTransfer from '../../components/InChatFileTransfer';
 import { TabActions, useNavigation, useRoute } from '@react-navigation/native';
 import firestore, { endBefore } from '@react-native-firebase/firestore'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import messaging from '@react-native-firebase/messaging';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Entypo';
 

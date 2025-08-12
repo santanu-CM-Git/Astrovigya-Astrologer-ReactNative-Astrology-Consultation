@@ -43,6 +43,10 @@ const AuthStack = () => {
           fontFamily: 'PlusJakartaSans-Medium',
           fontSize: responsiveFontSize(1.8),
         },
+        drawerStyle: {
+          borderTopRightRadius: 0,
+          borderBottomRightRadius: 0,
+        },
         //swipeEdgeWidth: 0, //for off the drawer swipe
       }}>
       <Drawer.Screen

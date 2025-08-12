@@ -27,15 +27,17 @@ import Logo from '../../src/assets/images/misc/logo.svg';
 import messaging from '@react-native-firebase/messaging';
 import Sound from 'react-native-sound';
 import ChatRequestModal from './ChatRequestModal';
+import notifee, { EventType } from '@notifee/react-native';
+import { withTranslation, useTranslation } from 'react-i18next';
 
-export default function CustomHeader({
-    onPress,
+const CustomHeader = ({ onPress,
     commingFrom,
     title,
-    onPressProfile,
-}) {
+    onPressProfile, }) => {
+
     // const { userInfo } = useContext(AuthContext)
     // console.log(userInfo?.photo)
+    const { t, i18n } = useTranslation();
     const navigation = useNavigation();
     const [userInfo, setuserInfo] = useState([])
     const [isEnabled, setIsEnabled] = useState(true);
@@ -167,42 +169,18 @@ export default function CustomHeader({
                     playSound();
                     setModalVisible(true)
                     setSessionDetails(parsevalue);
-                    // Alert.alert('A new session request arrived!', remoteMessage?.notification?.body, [
-                    //     {
-                    //         text: 'Cancel',
-                    //         onPress: () => {
-                    //             stopSound();
-                    //             console.log('Cancel Pressed')
-                    //             cancelInvitation(parsevalue.id)
-                    //         },
-                    //         style: 'cancel',
-                    //     },
-                    //     {
-                    //         text: 'OK', onPress: () => {
-                    //             stopSound();
-                    //             //navigation.navigate('ChatScreen',{details: remoteMessage?.data?.data})
-                    //             acceptInvitation(parsevalue.id, remoteMessage.data.data)
 
-                    //         }
-                    //     },
-                    // ]);
                 }
                 console.log('Received foreground message:', remoteMessage);
 
             });
 
             const unsubscribeBackground = messaging().setBackgroundMessageHandler(async remoteMessage => {
-                console.log('Received background message:', remoteMessage);
-
+                console.log('Received background message from custom header:', remoteMessage);
+                if (remoteMessage?.data?.screen === 'Session') {
+                    await onDisplayNotification(remoteMessage)
+                }
             });
-
-            // Load notifications from AsyncStorage when component mounts
-            // AsyncStorage.getItem('notifications').then((value) => {
-            //   if (value !== null) {
-            //     setNotifications(JSON.parse(value));
-            //     setnotifyStatus(true)
-            //   }
-            // });
 
             return () => {
                 unsubscribeForeground();
@@ -210,6 +188,71 @@ export default function CustomHeader({
             };
         }
     }, [])
+    async function onDisplayNotification(remoteMessage) {
+        // Request permissions (required for iOS)
+        await notifee.requestPermission();
+
+        // Create a channel (required for Android)
+        const channelId = await notifee.createChannel({
+            id: 'default',
+            name: 'Default Channel',
+        });
+
+        // Extract details from the message
+        const { title, body } = remoteMessage.notification || {}; // Use remoteMessage.notification if available
+        const data = JSON.parse(remoteMessage.data?.data || '{}'); // Custom data parsing
+        const sanitizedData = Object.keys(data).reduce((acc, key) => {
+            acc[key] = typeof data[key] === 'string' ? data[key] : JSON.stringify(data[key]);
+            return acc;
+        }, {});
+        // Display a notification
+        await notifee.displayNotification({
+            title: title || 'Notification Title',
+            body: body || 'Main body content of the notification',
+            android: {
+                channelId,
+                // smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
+                pressAction: {
+                    id: 'default', // Opens the app when notification is pressed
+                },
+                actions: [
+                    {
+                        title: 'Accept', // Text for the first button
+                        pressAction: {
+                            id: 'accept', // Unique ID for this action
+                            launchActivity: 'default',
+                        },
+                    },
+                    {
+                        title: 'Decline', // Text for the second button
+                        pressAction: {
+                            id: 'decline', // Unique ID for this action
+                            launchActivity: 'default',
+                        },
+                    },
+                ],
+            },
+            data: sanitizedData,
+        });
+    }
+
+    //   useEffect(() => {
+    //     // Register the foreground event listener
+    //     const unsubscribe = notifee.onForegroundEvent(({ type, detail }) => {
+    //       if (type === EventType.ACTION_PRESS && detail.pressAction.id === 'accept') {
+    //         console.log('Accept button pressed');
+    //         // Handle accept action
+    //       } else if (type === EventType.ACTION_PRESS && detail.pressAction.id === 'decline') {
+    //         console.log('Decline button pressed');
+    //         // Handle decline action
+    //       }
+    //     });
+
+    //     // Cleanup listener on component unmount
+    //     return () => {
+    //       unsubscribe();
+    //     };
+    //   }, []);
     const cancelInvitation = async (sessionid) => {
         try {
             const userToken = await AsyncStorage.getItem('userToken');
@@ -299,7 +342,7 @@ export default function CustomHeader({
                             />
                         </View>
                         <View style={{ height: responsiveHeight(6), width: responsiveWidth(40), flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 2, }}>
-                            <Text style={{ color: '#3A3232', fontSize: responsiveFontSize(1.5), fontFamily: 'PlusJakartaSans-SemiBold', marginRight: responsiveWidth(3) }}>Current Availability</Text>
+                            <Text style={{ color: '#3A3232', fontSize: responsiveFontSize(1.5), fontFamily: 'PlusJakartaSans-SemiBold', marginRight: responsiveWidth(3) }}>{t('CustomHeader.CurrentAvailability')}</Text>
                             <Switch
                                 trackColor={{ false: '#767577', true: '#1CAB04' }}
                                 thumbColor={isEnabled ? '#fff' : '#fff'}
@@ -442,3 +485,5 @@ const styles = StyleSheet.create({
         })
     }
 })
+
+export default withTranslation()(CustomHeader)

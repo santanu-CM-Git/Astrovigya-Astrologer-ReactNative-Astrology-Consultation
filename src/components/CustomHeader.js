@@ -13,6 +13,7 @@ import {
     Switch,
     Alert,
     Platform,
+    DeviceEventEmitter,
 } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
 import { hambargar, userPhoto } from '../utils/Images';
@@ -24,34 +25,22 @@ import { API_URL } from '@env'
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import Logo from '../../src/assets/images/misc/logo.svg';
-import messaging from '@react-native-firebase/messaging';
 import Sound from 'react-native-sound';
 import ChatRequestModal from './ChatRequestModal';
-import notifee, { EventType } from '@notifee/react-native';
 import { withTranslation, useTranslation } from 'react-i18next';
 
-const CustomHeader = ({ onPress,
-    commingFrom,
-    title,
-    onPressProfile, }) => {
-
-    // const { userInfo } = useContext(AuthContext)
-    // console.log(userInfo?.photo)
+const CustomHeader = ({ onPress, commingFrom, title, onPressProfile }) => {
     const { t, i18n } = useTranslation();
     const navigation = useNavigation();
     const [userInfo, setuserInfo] = useState([])
     const [isEnabled, setIsEnabled] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
     const [sessionDetails, setSessionDetails] = useState(null);
-    //let sound;
     const soundRef = useRef(null);
 
     const toggleSwitch = async () => {
         const newStatus = !isEnabled;
-
-        // Optimistically update the switch UI
         setIsEnabled(newStatus);
-
         const status = newStatus ? '1' : '0';
 
         try {
@@ -73,12 +62,10 @@ const CustomHeader = ({ onPress,
             console.log(response.data, 'bbbbb')
 
             if (response.data.response !== true) {
-                // If the response is not successful, revert the switch state
                 setIsEnabled(prevState => !prevState);
             }
         } catch (error) {
             console.log(`status change error: ${error}`);
-            // Revert the switch state in case of an error
             setIsEnabled(prevState => !prevState);
         }
     };
@@ -99,7 +86,7 @@ const CustomHeader = ({ onPress,
             });
             const userInfo = response.data.data;
             console.log(userInfo, 'user data from header');
-            // setuserInfo(userInfo);
+            
             if (userInfo.active_status == 1) {
                 setIsEnabled(true)
             } else {
@@ -110,14 +97,33 @@ const CustomHeader = ({ onPress,
             console.log(`Profile error ${error}`);
         }
     };
+
     useEffect(() => {
         fetchProfileDetails()
     }, [])
+
     useFocusEffect(
         React.useCallback(() => {
             fetchProfileDetails()
         }, [])
     )
+
+    // Listen for session requests from App.js via DeviceEventEmitter
+    useEffect(() => {
+        const sessionRequestListener = DeviceEventEmitter.addListener(
+            'SESSION_REQUEST_RECEIVED',
+            (sessionData) => {
+                console.log('Session request received in CustomHeader:', sessionData);
+                playSound();
+                setModalVisible(true);
+                setSessionDetails(sessionData);
+            }
+        );
+
+        return () => {
+            sessionRequestListener.remove();
+        };
+    }, []);
 
     const handleJoin = async () => {
         if (sessionDetails) {
@@ -135,6 +141,7 @@ const CustomHeader = ({ onPress,
             setModalVisible(false);
         }
     };
+
     const playSound = async () => {
         if (!soundRef.current) {
             soundRef.current = new Sound('notification.wav', Sound.MAIN_BUNDLE, (error) => {
@@ -155,104 +162,12 @@ const CustomHeader = ({ onPress,
         if (soundRef.current) {
             soundRef.current.stop(() => {
                 console.log('Sound stopped');
-                soundRef.current.release(); // Releases the sound instance
-                soundRef.current = null; // Reset ref to null
+                soundRef.current.release();
+                soundRef.current = null;
             });
         }
     };
-    useEffect(() => {
-        if (Platform.OS == 'android') {
-            const unsubscribeForeground = messaging().onMessage(async remoteMessage => {
-                const parsevalue = JSON.parse(remoteMessage?.data?.data)
 
-                if (remoteMessage?.data?.screen === 'Session') {
-                    playSound();
-                    setModalVisible(true)
-                    setSessionDetails(parsevalue);
-
-                }
-                console.log('Received foreground message:', remoteMessage);
-
-            });
-
-            const unsubscribeBackground = messaging().setBackgroundMessageHandler(async remoteMessage => {
-                console.log('Received background message from custom header:', remoteMessage);
-                if (remoteMessage?.data?.screen === 'Session') {
-                    await onDisplayNotification(remoteMessage)
-                }
-            });
-
-            return () => {
-                unsubscribeForeground();
-                //unsubscribeBackground();
-            };
-        }
-    }, [])
-    async function onDisplayNotification(remoteMessage) {
-        // Request permissions (required for iOS)
-        await notifee.requestPermission();
-
-        // Create a channel (required for Android)
-        const channelId = await notifee.createChannel({
-            id: 'default',
-            name: 'Default Channel',
-        });
-
-        // Extract details from the message
-        const { title, body } = remoteMessage.notification || {}; // Use remoteMessage.notification if available
-        const data = JSON.parse(remoteMessage.data?.data || '{}'); // Custom data parsing
-        const sanitizedData = Object.keys(data).reduce((acc, key) => {
-            acc[key] = typeof data[key] === 'string' ? data[key] : JSON.stringify(data[key]);
-            return acc;
-        }, {});
-        // Display a notification
-        await notifee.displayNotification({
-            title: title || 'Notification Title',
-            body: body || 'Main body content of the notification',
-            android: {
-                channelId,
-                // smallIcon: 'name-of-a-small-icon', // optional, defaults to 'ic_launcher'.
-                pressAction: {
-                    id: 'default', // Opens the app when notification is pressed
-                },
-                actions: [
-                    {
-                        title: 'Accept', // Text for the first button
-                        pressAction: {
-                            id: 'accept', // Unique ID for this action
-                            launchActivity: 'default',
-                        },
-                    },
-                    {
-                        title: 'Decline', // Text for the second button
-                        pressAction: {
-                            id: 'decline', // Unique ID for this action
-                            launchActivity: 'default',
-                        },
-                    },
-                ],
-            },
-            data: sanitizedData,
-        });
-    }
-
-    //   useEffect(() => {
-    //     // Register the foreground event listener
-    //     const unsubscribe = notifee.onForegroundEvent(({ type, detail }) => {
-    //       if (type === EventType.ACTION_PRESS && detail.pressAction.id === 'accept') {
-    //         console.log('Accept button pressed');
-    //         // Handle accept action
-    //       } else if (type === EventType.ACTION_PRESS && detail.pressAction.id === 'decline') {
-    //         console.log('Decline button pressed');
-    //         // Handle decline action
-    //       }
-    //     });
-
-    //     // Cleanup listener on component unmount
-    //     return () => {
-    //       unsubscribe();
-    //     };
-    //   }, []);
     const cancelInvitation = async (sessionid) => {
         try {
             const userToken = await AsyncStorage.getItem('userToken');
@@ -273,12 +188,13 @@ const CustomHeader = ({ onPress,
             console.log(response.data, 'bbbbb')
 
             if (response.data.response == true) {
-
+                // Success
             }
         } catch (error) {
             console.log(`cancel session error: ${error}`);
         }
     }
+
     const acceptInvitation = async (sessionid, data) => {
         try {
             const userToken = await AsyncStorage.getItem('userToken');
@@ -301,18 +217,23 @@ const CustomHeader = ({ onPress,
             if (response.data.response == true) {
                 const parsedData = data;
                 const chat = parsedData.chat;
-                navigation.navigate("ChatScreen", { commingFrom: chat == '1' ? "from_chat" : "from_call", details2: parsedData, details: response.data.data })
+                navigation.navigate("ChatScreen", { 
+                    commingFrom: chat == '1' ? "from_chat" : "from_call", 
+                    details2: parsedData, 
+                    details: response.data.data 
+                })
             }
         } catch (error) {
             console.log(`accept session error: ${error}`);
         }
     }
+
     return (
         <>
             {commingFrom == 'Home' ?
                 <>
                     <LinearGradient
-                        colors={['#EFDFC9', '#FFFFFF']} // Example colors, replace with your desired gradient
+                        colors={['#EFDFC9', '#FFFFFF']}
                         locations={[0, 1]}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 0, y: 1 }}
@@ -320,25 +241,14 @@ const CustomHeader = ({ onPress,
                     >
                         <View style={styles.firstSection}>
                             <TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{ width: 44, height: 44, borderRadius: 44 / 2, justifyContent: 'center', alignItems: 'center' }}>
-                                {/* {userInfo?.photo ?
-                                    <Image
-                                        source={{ uri: userInfo?.photo }}
-                                        style={styles.headerImage}
-                                    /> : */}
                                 <Image
                                     source={hambargar}
                                     style={styles.headerImage}
                                 />
-                                {/* } */}
                             </TouchableOpacity>
-                            {/* <Image
-                                source={require('../assets/images/icon.png')}
-                                style={{ height: responsiveHeight(3.5), width: responsiveWidth(25), resizeMode: 'contain', marginLeft: responsiveWidth(2) }}
-                            /> */}
                             <Logo
                                 width={responsiveWidth(25)}
                                 height={responsiveHeight(5)}
-                            //style={{transform: [{rotate: '-15deg'}]}}
                             />
                         </View>
                         <View style={{ height: responsiveHeight(6), width: responsiveWidth(40), flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 2, }}>
@@ -372,7 +282,7 @@ const CustomHeader = ({ onPress,
                     :
                     <>
                         <LinearGradient
-                            colors={['#EFDFC9', '#FFFFFF']} // Example colors, replace with your desired gradient
+                            colors={['#EFDFC9', '#FFFFFF']}
                             locations={[0, 1]}
                             start={{ x: 0, y: 0 }}
                             end={{ x: 0, y: 1 }}
@@ -477,10 +387,10 @@ const styles = StyleSheet.create({
     switchStyle: {
         ...Platform.select({
             ios: {
-                transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }]  // Adjust scale values as needed
+                transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }]
             },
             android: {
-                transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }]  // Adjust scale values as needed
+                transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }]
             }
         })
     }

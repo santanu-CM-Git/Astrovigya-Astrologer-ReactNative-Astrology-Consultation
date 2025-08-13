@@ -36,10 +36,10 @@ const renderConsultation = ({ item, navigation }) => (
             </View>
             <View style={styles.itemImageContainer}>
                 <Text style={styles.itemAmount}>₹{item?.cost ? Number(item.cost).toFixed(2) : '0.00'}</Text>
-                <Image
+                {/* <Image
                     source={cardArrowImg}
                     style={styles.cardIconImg}
-                />
+                /> */}
             </View>
         </View>
         <TouchableOpacity style={[styles.joinNowButtonForCall, { marginTop: responsiveHeight(1), marginLeft: responsiveWidth(15) }]}

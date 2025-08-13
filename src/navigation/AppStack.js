@@ -26,6 +26,8 @@ import ServiceScreen from '../screens/NoAuthScreen/ServiceScreen';
 import ClientManagement from '../screens/NoAuthScreen/ClientManagement';
 import ProfileScreen from '../screens/NoAuthScreen/ProfileScreen';
 import { withTranslation, useTranslation } from 'react-i18next';
+import WithdrawScreen from '../screens/NoAuthScreen/WithdrawScreen';
+import ChatHistory from '../screens/NoAuthScreen/ChatHistory';
 const Drawer = createDrawerNavigator();
 
 const AuthStack = () => {
@@ -157,6 +159,28 @@ const AuthStack = () => {
             // <Ionicons name="settings-outline" size={22} color={color} />
             <Image source={settingsIcon} style={{ width: 25, height: 25, marginRight: responsiveWidth(5) }} color={color} />
           ),
+        }}
+      />
+       <Drawer.Screen
+        name="WithdrawScreen"
+        component={WithdrawScreen}
+        options={{
+          drawerItemStyle: { display: 'none' },
+        }}
+      />
+      
+      <Drawer.Screen
+        name="ChatHistory"
+        component={ChatHistory}
+        options={{
+          drawerItemStyle: { display: 'none' },
+        }}
+      />
+      <Drawer.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
+        options={{
+          drawerItemStyle: { display: 'none' },
         }}
       />
       {/* <Drawer.Screen

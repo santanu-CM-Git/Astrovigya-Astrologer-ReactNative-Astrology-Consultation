@@ -28,6 +28,7 @@ import ProfileScreen from '../screens/NoAuthScreen/ProfileScreen';
 import { withTranslation, useTranslation } from 'react-i18next';
 import WithdrawScreen from '../screens/NoAuthScreen/WithdrawScreen';
 import ChatHistory from '../screens/NoAuthScreen/ChatHistory';
+import TermsConditions from '../screens/NoAuthScreen/TermsConditions';
 const Drawer = createDrawerNavigator();
 
 const AuthStack = () => {
@@ -179,6 +180,20 @@ const AuthStack = () => {
       <Drawer.Screen
         name="PrivacyPolicy"
         component={PrivacyPolicy}
+        options={{
+          drawerItemStyle: { display: 'none' },
+        }}
+      />
+       <Drawer.Screen
+        name="CustomerSupport"
+        component={CustomerSupport}
+        options={{
+          drawerItemStyle: { display: 'none' },
+        }}
+      />
+       <Drawer.Screen
+        name="TermsConditions"
+        component={TermsConditions}
         options={{
           drawerItemStyle: { display: 'none' },
         }}

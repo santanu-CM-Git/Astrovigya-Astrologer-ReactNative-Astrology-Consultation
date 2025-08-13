@@ -4,13 +4,13 @@ import { WebView } from 'react-native-webview';
 import CustomHeader from '../../components/CustomHeader';
 import { useNavigation } from '@react-navigation/native';
 
-export default function PrivacyPolicy({  }) {
+export default function TermsConditions({  }) {
     const navigation = useNavigation();
     return (
         <SafeAreaView style={styles.Container}>
-            <CustomHeader commingFrom={'Privacy Policy'} title={'Privacy Policy'} onPress={() => navigation.goBack()} onPressProfile={() => navigation.navigate('Profile')} />
+            <CustomHeader commingFrom={'Privacy Policy'} title={'Terms & Conditions'} onPress={() => navigation.goBack()} onPressProfile={() => navigation.navigate('Profile')} />
             <WebView
-                source={{ uri: 'https://astrovigya.com/privacy-policy/' }}
+                source={{ uri: 'https://astrovigya.com/terms-conditions/' }}
                 style={{ flex: 1 }}
                 startInLoadingState={true}
             />
@@ -23,10 +23,4 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-    wrapper: {
-        padding: 20,
-        //paddingBottom: responsiveHeight(2)
-    },
-    
-
 });

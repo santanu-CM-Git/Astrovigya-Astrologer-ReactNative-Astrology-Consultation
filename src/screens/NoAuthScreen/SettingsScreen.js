@@ -115,6 +115,7 @@ const SettingsScreen = ({  }) => {
                     </View>
                 </TouchableOpacity>
                 <View style={[styles.horizontalLine, { borderColor: '#E3E3E3' }]} />
+                <TouchableOpacity onPress={() => navigation.navigate('TermsConditions')}>
                 <View style={styles.flexView}>
                     <View style={[styles.iconNameView, { width: responsiveWidth(73) }]}>
                         <Image
@@ -124,6 +125,7 @@ const SettingsScreen = ({  }) => {
                         <Text style={styles.textStyle}>{t('settings.Terms&Conditions')}</Text>
                     </View>
                 </View>
+                </TouchableOpacity>
                 <View style={[styles.horizontalLine, { borderColor: '#E3E3E3' }]} />
                 <TouchableOpacity onPress={() => toggleLogoutModal()}>
                     <View style={styles.flexView}>

@@ -14,7 +14,7 @@ import {
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {launchImageLibrary} from 'react-native-image-picker';
+import DocumentPicker from 'react-native-document-picker';
 import InputField from '../../components/InputField';
 import CustomButton from '../../components/CustomButton';
 import { dateIcon, deleteRoundImg, pagination1Img, pagination2Img, plus, uploadImg, uploadPicImg, userPhoto } from '../../utils/Images';
@@ -94,70 +94,30 @@ const PersonalInformationTwo = ({ route }) => {
     loadLanguage();
   }, []);
 
-  // const pickDocument = async (index) => {
-  //   try {
-  //     const result = await DocumentPicker.pick({
-  //       type: [DocumentPicker.types.allFiles],
-  //     });
-
-  //     console.log('URI: ', result[0].uri);
-  //     console.log('Type: ', result[0].type);
-  //     console.log('Name: ', result[0].name);
-  //     console.log('Size: ', result[0].size);
-
-  //     const newCertifications = [...certifications];
-  //     newCertifications[index].document = result[0];
-  //     newCertifications[index].documentImg = result[0].uri;
-  //     setCertifications(newCertifications);
-
-  //   } catch (err) {
-  //     if (DocumentPicker.isCancel(err)) {
-  //       console.log('Document picker was cancelled');
-  //     } else {
-  //       console.error('Error picking document', err);
-  //     }
-  //   }
-  // };
   const pickDocument = async (index) => {
     try {
-        const options = {
-            mediaType: 'photo',
-            includeBase64: false,
-            maxHeight: 2000,
-            maxWidth: 2000,
-        };
+      const result = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles],
+      });
 
-        launchImageLibrary(options, (response) => {
-            if (response.didCancel) {
-                console.log('Document picker was cancelled');
-                return;
-            }
-            
-            if (response.errorMessage) {
-                console.error('Error picking document', response.errorMessage);
-                return;
-            }
+      console.log('URI: ', result[0].uri);
+      console.log('Type: ', result[0].type);
+      console.log('Name: ', result[0].name);
+      console.log('Size: ', result[0].size);
 
-            if (response.assets && response.assets.length > 0) {
-                const pickedDocument = response.assets[0];
-                
-                console.log('URI: ', pickedDocument.uri);
-                console.log('Type: ', pickedDocument.type);
-                console.log('Name: ', pickedDocument.fileName);
-                console.log('Size: ', pickedDocument.fileSize);
-
-                const newCertifications = [...certifications];
-                newCertifications[index].document = pickedDocument;
-                newCertifications[index].documentImg = pickedDocument.uri;
-                setCertifications(newCertifications);
-            }
-        });
+      const newCertifications = [...certifications];
+      newCertifications[index].document = result[0];
+      newCertifications[index].documentImg = result[0].uri;
+      setCertifications(newCertifications);
 
     } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log('Document picker was cancelled');
+      } else {
         console.error('Error picking document', err);
+      }
     }
-};
-
+  };
   const fetchExperience = async() => {
     console.log(route?.params?.token, 'tokennnnn');
     const savedLang = await AsyncStorage.getItem('selectedLanguage');
@@ -246,7 +206,7 @@ const PersonalInformationTwo = ({ route }) => {
       // console.log(selectedItemsSpecializations, 'selectedItemsSpecializations');
       // console.log(bio, 'bio');
       // console.log(certifications, 'certifications');
-      const formData = new FormData();
+      const formData = new FormData(); 
       formData.append("year_of_experience", yearvalue);
       formData.append("languages", selectedItemsLanguage);
       formData.append("specializations", selectedItemsSpecializations);

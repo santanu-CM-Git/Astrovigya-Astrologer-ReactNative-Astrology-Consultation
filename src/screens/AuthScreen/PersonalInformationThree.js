@@ -15,7 +15,7 @@ import {
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {launchImageLibrary} from 'react-native-image-picker';
+import DocumentPicker from 'react-native-document-picker';
 import InputField from '../../components/InputField';
 import CustomButton from '../../components/CustomButton';
 import { dateIcon, deleteRoundImg, pagination1Img, pagination3Img, plus, uploadImg, uploadPicImg, userPhoto } from '../../utils/Images';
@@ -54,7 +54,7 @@ const PersonalInformationThree = ({ route }) => {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
   const [langvalue, setLangValue] = useState('en');
-  const [currentStep, setCurrentStep] = useState(3)
+  const [currentStep, setCurrentStep] = useState(3) 
   const [pickedGovId, setPickedGovId] = useState(null);
   const [pickedGovIdIMG, setPickedGovIdIMG] = useState(null);
   const [govidError, setgovidError] = useState('')
@@ -105,51 +105,81 @@ const PersonalInformationThree = ({ route }) => {
 
     loadLanguage();
   }, []);
-  const pickDocument = async (forwhat) => {
-    try {
-        const options = {
-            mediaType: 'photo',
-            includeBase64: false,
-            maxHeight: 2000,
-            maxWidth: 2000,
-        };
+//   const pickDocument = async (forwhat) => {
+//     try {
+//         const options = {
+//             mediaType: 'photo',
+//             includeBase64: false,
+//             maxHeight: 2000,
+//             maxWidth: 2000,
+//         };
 
-        launchImageLibrary(options, (response) => {
-            if (response.didCancel) {
-                console.log('Document picker was cancelled');
-                return;
-            }
+//         launchImageLibrary(options, (response) => {
+//             if (response.didCancel) {
+//                 console.log('Document picker was cancelled');
+//                 return;
+//             }
             
-            if (response.errorMessage) {
-                console.error('Error picking document', response.errorMessage);
-                return;
-            }
+//             if (response.errorMessage) {
+//                 console.error('Error picking document', response.errorMessage);
+//                 return;
+//             }
 
-            if (response.assets && response.assets.length > 0) {
-                const pickedDocument = response.assets[0];
+//             if (response.assets && response.assets.length > 0) {
+//                 const pickedDocument = response.assets[0];
                 
-                console.log('URI: ', pickedDocument.uri);
-                console.log('Type: ', pickedDocument.type);
-                console.log('Name: ', pickedDocument.fileName);
-                console.log('Size: ', pickedDocument.fileSize);
+//                 console.log('URI: ', pickedDocument.uri);
+//                 console.log('Type: ', pickedDocument.type);
+//                 console.log('Name: ', pickedDocument.fileName);
+//                 console.log('Size: ', pickedDocument.fileSize);
                 
-                if (forwhat == 'govid') {
-                    setPickedGovId(pickedDocument);
-                    setPickedGovIdIMG(pickedDocument.uri);
-                    setgovidError('');
-                } else if (forwhat == 'addressproof') {
-                    setPickedAddressProof(pickedDocument);
-                    setPickedAddressProofIMG(pickedDocument.uri);
-                    setAddressProofError('');
-                }
-            }
-        });
+//                 if (forwhat == 'govid') {
+//                     setPickedGovId(pickedDocument);
+//                     setPickedGovIdIMG(pickedDocument.uri);
+//                     setgovidError('');
+//                 } else if (forwhat == 'addressproof') {
+//                     setPickedAddressProof(pickedDocument);
+//                     setPickedAddressProofIMG(pickedDocument.uri);
+//                     setAddressProofError('');
+//                 }
+//             }
+//         });
 
-    } catch (err) {
-        console.error('Error picking document', err);
+//     } catch (err) {
+//         console.error('Error picking document', err);
+//     }
+// };
+
+const pickDocument = async (forwhat) => {
+  try {
+    const result = await DocumentPicker.pick({
+      type: [DocumentPicker.types.allFiles],
+    });
+
+    console.log('URI: ', result[0].uri);
+    console.log('Type: ', result[0].type);
+    console.log('Name: ', result[0].name);
+    console.log('Size: ', result[0].size);
+    if (forwhat == 'govid') {
+      setPickedGovId(result[0])
+      setPickedGovIdIMG(result[0].uri)
+      setgovidError('')
+    } else if (forwhat == 'addressproof') {
+      setPickedAddressProof(result[0])
+      setPickedAddressProofIMG(result[0].uri)
+      setAddressProofError('')
     }
-};
 
+
+  } catch (err) {
+    if (DocumentPicker.isCancel(err)) {
+      // User cancelled the document picker
+      console.log('Document picker was cancelled');
+    } else {
+      console.error('Error picking document', err);
+    }
+  }
+};
   const deleteGovId = () => {
     setPickedAddressProofIMG(null)
     setPickedAddressProof(null)

@@ -6,7 +6,8 @@ import {
     TextInput,
     TouchableOpacity,
     StyleSheet,
-    Alert
+    Alert,
+    Platform
 } from 'react-native';
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -21,7 +22,7 @@ import Loader from '../../utils/Loader';
 import Toast from 'react-native-toast-message';
 import { withTranslation, useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'; 
 // import OTPVerify from 'react-native-otp-verify';
 
 const OtpScreen = ({ route }) => {
@@ -275,7 +276,7 @@ const OtpScreen = ({ route }) => {
         } else {
             console.log('not correct')
             setIsLoading(false)
-            Alert.alert('', t('login.TheOTPdoesnotmatchPleaseenterthecorrectOTP'), [
+            Alert.alert('', t('otp.TheOTPdoesnotmatchPleaseenterthecorrectOTP'), [
                 {
                     text: 'Cancel',
                     onPress: () => console.log('Cancel Pressed'),
@@ -314,8 +315,8 @@ const OtpScreen = ({ route }) => {
                             position: 'top',
                             topOffset: Platform.OS == 'ios' ? 55 : 20
                         });
-                        alert(res.data?.data)
-                        setComingOTP(res.data.otp)
+                        //alert(res.data?.data)
+                        setComingOTP(res.data?.data)
                         setTimer(60 * 1)
                         setIsResendDisabled(true);
                         setOtp('')

@@ -125,7 +125,7 @@ const PersonalInformation = ({ route }) => {
     }
   }
 
-  const pickDocument = async () => {
+  const pickDocument = async () => { 
     console.log('pickDocument called');
     try {
         const options = {

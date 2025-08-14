@@ -29,7 +29,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { orImg } from '../../utils/Images';
 import Toast from 'react-native-toast-message';
 import { withTranslation, useTranslation } from 'react-i18next';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native'; 
 
 const BannerWidth = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(BannerWidth * 0.7)
@@ -156,7 +156,7 @@ const LoginScreen = ({  }) => {
                 position: 'top',
                 topOffset: Platform.OS == 'ios' ? 55 : 20
               });
-              alert(res.data?.data)
+              //alert(res.data?.data)
               // login(res.data.token)
               navigation.navigate('Otp', { phone: phone, otp: res.data?.data })
             } else {

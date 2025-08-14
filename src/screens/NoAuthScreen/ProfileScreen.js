@@ -14,7 +14,7 @@ import {
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {launchImageLibrary} from 'react-native-image-picker';
+import DocumentPicker from 'react-native-document-picker';
 import InputField from '../../components/InputField';
 import CustomButton from '../../components/CustomButton';
 import { deleteRoundImg, plus, uploadImg, uploadPicImg, userPhoto, dateIcon } from '../../utils/Images';
@@ -210,50 +210,36 @@ const ProfileScreen = ({  route }) => {
 
   const pickDocument = async () => {
     try {
-        const options = {
-            mediaType: 'photo',
-            includeBase64: false,
-            maxHeight: 2000,
-            maxWidth: 2000,
-        };
+      const result = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles],
+      });
 
-        launchImageLibrary(options, (response) => {
-            if (response.didCancel) {
-                console.log('Document picker was cancelled');
-                return;
-            }
-            
-            if (response.errorMessage) {
-                console.log('Error response:', response.errorMessage);
-                handleAlert('Oops..', response.errorMessage);
-                setIsPicUploadLoading(false);
-                return;
-            }
+      const pickedDocument = result[0];
+      setPickedDocument(pickedDocument);
 
-            if (response.assets && response.assets.length > 0) {
-                const pickedDocument = response.assets[0];
-                setPickedDocument(pickedDocument);
-
-                const formData = new FormData();
-                if (pickedDocument) {
-                    formData.append("profile_pic", {
-                        uri: pickedDocument.uri,
-                        type: pickedDocument.type || 'image/jpeg',
-                        name: pickedDocument.fileName || 'photo.jpg',
-                    });
-                } else {
-                    formData.append("profile_pic", "");
-                }
-            }
+      const formData = new FormData();
+      if (pickedDocument) {
+        formData.append("profile_pic", {
+          uri: pickedDocument.uri,
+          type: pickedDocument.type || 'image/jpeg',
+          name: pickedDocument.name || 'photo.jpg',
         });
+      } else {
+        formData.append("profile_pic", "");
+      }
 
     } catch (err) {
-        setIsPicUploadLoading(false);
+      setIsPicUploadLoading(false);
+      if (DocumentPicker.isCancel(err)) {
+        console.log('Document picker was cancelled');
+      } else if (err.response) {
+        console.log('Error response:', err.response.data?.response?.records);
+        handleAlert('Oops..', err.response.data?.message);
+      } else {
         console.error('Error picking document', err);
-        handleAlert('Oops..', 'An error occurred while picking the image');
+      }
     }
-};
-
+  };
   const deleteGovId = () => {
     setPickedAddressProofIMG(null)
     setPickedAddressProof(null)

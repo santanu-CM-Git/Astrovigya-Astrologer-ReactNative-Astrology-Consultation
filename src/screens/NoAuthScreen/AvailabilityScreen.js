@@ -35,7 +35,7 @@ const data = [
     { label: 'November', value: 'November' },
     { label: 'December', value: 'December' },
 ];
-const AvailabilityScreen = ({  }) => {
+const AvailabilityScreen = ({ }) => {
     const navigation = useNavigation();
     const { t, i18n } = useTranslation();
     const [isLoading, setIsLoading] = useState(false)
@@ -92,7 +92,9 @@ const AvailabilityScreen = ({  }) => {
 
     const renderHeader = (section, _, isActive) => (
         <View style={styles.headerContainer}>
-            <Text style={styles.headerText}>{section}</Text>
+            <View style={{ width: responsiveWidth(80) }}>
+                <Text style={styles.headerText}>{section}</Text>
+            </View>
             <Icon name={isActive ? "keyboard-arrow-down" : "keyboard-arrow-right"} size={24} color="#FF8A00" />
         </View>
     );
@@ -163,7 +165,7 @@ const AvailabilityScreen = ({  }) => {
     );
 
     const submitAvailability = async () => {
-        AsyncStorage.getItem('userToken', async(err, usertoken) => {
+        AsyncStorage.getItem('userToken', async (err, usertoken) => {
             //console.log(selectedItem, "kkkkkkkkkkk")
             const savedLang = await AsyncStorage.getItem('selectedLanguage');
             const option = {
@@ -202,7 +204,7 @@ const AvailabilityScreen = ({  }) => {
     }
 
     const fetchAvailability = async (argValue) => {
-        AsyncStorage.getItem('userToken', async(err, usertoken) => {
+        AsyncStorage.getItem('userToken', async (err, usertoken) => {
             const savedLang = await AsyncStorage.getItem('selectedLanguage');
             const value = moment().format('MMMM');
 
@@ -264,7 +266,7 @@ const AvailabilityScreen = ({  }) => {
     }
 
     const deleteAvailability = (id) => {
-        AsyncStorage.getItem('userToken', async(err, usertoken) => {
+        AsyncStorage.getItem('userToken', async (err, usertoken) => {
             //console.log(selectedItem, "kkkkkkkkkkk")
             const savedLang = await AsyncStorage.getItem('selectedLanguage');
             const option = {
@@ -467,7 +469,7 @@ const styles = StyleSheet.create({
     headerText: {
         color: '#1E2023',
         fontSize: responsiveFontSize(2),
-        fontFamily: 'PlusJakartaSans-SemiBold'
+        fontFamily: 'PlusJakartaSans-SemiBold',
     },
     // dropdown start
     dropdown: {

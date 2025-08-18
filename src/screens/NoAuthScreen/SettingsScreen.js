@@ -1,5 +1,5 @@
-import React, { useContext, useState,useEffect } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { View, Text, SafeAreaView, StyleSheet, ScrollView, Image, TouchableOpacity, Alert } from 'react-native';
 import CustomHeader from '../../components/CustomHeader';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { languageMenu, privacyMenu, termsMenu, logoutMenu, ArrowGratter, aboutusMenu } from '../../utils/Images';
@@ -10,8 +10,11 @@ import CustomButton from '../../components/CustomButton';
 import { AuthContext } from '../../context/AuthContext';
 import { withTranslation, useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+import { API_URL } from '@env'
+import Loader from '../../utils/Loader';
 
-const SettingsScreen = ({  }) => {
+const SettingsScreen = ({ }) => {
     const navigation = useNavigation();
     const { t, i18n } = useTranslation();
     const { logout } = useContext(AuthContext);
@@ -58,8 +61,41 @@ const SettingsScreen = ({  }) => {
         navigation.navigate("Home")
     };
 
-    const deleteAccount = () => {
+    const deleteAccount = async () => {
+        setIsLoading(true);
+        try {
+            const userToken = await AsyncStorage.getItem('userToken');
+            //const savedLang = await AsyncStorage.getItem('selectedLanguage');
+            const response = await axios.post(`${API_URL}/astrologer/astrologer-delete-account`, {}, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${userToken}`,
+                    //'Accept-Language': savedLang,
+                },
+            });
 
+            console.log(JSON.stringify(response.data), 'response from delete account api');
+
+            if (response.data.response === true) {
+                setIsLoading(false);
+                toggleAccountDeleteModal()
+                logout()
+            } else {
+                console.log('not okk');
+                setIsLoading(false);
+                Alert.alert('Oops..', "Something went wrong", [
+                    { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                    { text: 'OK', onPress: () => console.log('OK Pressed') },
+                ]);
+            }
+        } catch (e) {
+            setIsLoading(false);
+            console.error('Fetch error:', e);
+            Alert.alert('Oops..', e.response?.data?.message, [
+                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ]);
+        }
     }
 
     if (isLoading) {
@@ -81,7 +117,7 @@ const SettingsScreen = ({  }) => {
                         <Text style={styles.textStyle}>{t('settings.SelectLanguage')}</Text>
                     </View>
                     <TouchableOpacity onPress={toggleModal} style={[styles.iconNameView, { width: responsiveWidth(25) }]}>
-                    <Text style={styles.textStyle}>{langvalue == 'en' ? "English" : "Hindi"}</Text>
+                        <Text style={styles.textStyle}>{langvalue == 'en' ? "English" : "Hindi"}</Text>
                         <Image
                             source={ArrowGratter}
                             style={[styles.IconImg, { marginLeft: responsiveWidth(3), tintColor: '#8B939D' }]}
@@ -116,15 +152,15 @@ const SettingsScreen = ({  }) => {
                 </TouchableOpacity>
                 <View style={[styles.horizontalLine, { borderColor: '#E3E3E3' }]} />
                 <TouchableOpacity onPress={() => navigation.navigate('TermsConditions')}>
-                <View style={styles.flexView}>
-                    <View style={[styles.iconNameView, { width: responsiveWidth(73) }]}>
-                        <Image
-                            source={termsMenu}
-                            style={[styles.cardIconImg, { marginRight: responsiveWidth(3) }]}
-                        />
-                        <Text style={styles.textStyle}>{t('settings.Terms&Conditions')}</Text>
+                    <View style={styles.flexView}>
+                        <View style={[styles.iconNameView, { width: responsiveWidth(73) }]}>
+                            <Image
+                                source={termsMenu}
+                                style={[styles.cardIconImg, { marginRight: responsiveWidth(3) }]}
+                            />
+                            <Text style={styles.textStyle}>{t('settings.Terms&Conditions')}</Text>
+                        </View>
                     </View>
-                </View>
                 </TouchableOpacity>
                 <View style={[styles.horizontalLine, { borderColor: '#E3E3E3' }]} />
                 <TouchableOpacity onPress={() => toggleLogoutModal()}>
@@ -165,7 +201,7 @@ const SettingsScreen = ({  }) => {
                 <View style={styles.modalContent}>
                     <Text style={styles.modalTitle}>{t('settings.logoutText')}</Text>
                     <View style={styles.buttonWrapper}>
-                        <View style={{ width: responsiveWidth(30), alignSelf: 'center',marginBottom: -responsiveHeight(1) }}>
+                        <View style={{ width: responsiveWidth(30), alignSelf: 'center', marginBottom: -responsiveHeight(1) }}>
                             <CustomButton label={t('settings.No')}
                                 // onPress={() => { login() }}
                                 onPress={() => { toggleLogoutModal() }}

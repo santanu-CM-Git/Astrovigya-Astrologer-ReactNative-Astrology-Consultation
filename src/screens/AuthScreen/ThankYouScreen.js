@@ -13,18 +13,7 @@ import { withTranslation, useTranslation } from 'react-i18next';
 const ThankYouScreen = ({  }) => {
   const navigation = useNavigation();
   const { t, i18n } = useTranslation();
-  useFocusEffect(
-    useCallback(() => {
-      const onBackPress = () => {
-        navigation.navigate('Onboarding'); // Replace 'YourTargetScreen' with the name of the screen you want to navigate to
-        return true; // This prevents the default behavior (going back to the previous screen)
-      };
-
-      BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-      return () => BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, [navigation])
-  );
+  
   return (
 
     <LinearGradient

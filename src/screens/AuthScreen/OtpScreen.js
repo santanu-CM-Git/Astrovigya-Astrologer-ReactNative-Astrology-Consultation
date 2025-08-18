@@ -22,7 +22,7 @@ import Loader from '../../utils/Loader';
 import Toast from 'react-native-toast-message';
 import { withTranslation, useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
 // import OTPVerify from 'react-native-otp-verify';
 
 const OtpScreen = ({ route }) => {
@@ -205,17 +205,18 @@ const OtpScreen = ({ route }) => {
             })
                 .then(res => {
                     console.log(res.data);
-                    // Handle case where data might be an array
-                    const userData = Array.isArray(res.data.data) ? res.data.data[0] : res.data.data;
-                    const isBlocked = userData.status === "1";
 
-                    console.log('User Data:', userData);
-                    console.log('Is Blocked:', isBlocked);
-                    console.log('Full Name:', userData.full_name);
-                    console.log('Astrologer Details:', userData.astrologer_details);
-                    console.log('Government ID:', userData.astrologer_details?.goverment_id);
 
                     if (res.data.response === true) {
+                        // Handle case where data might be an array
+                        const userData = Array.isArray(res.data.data) ? res.data.data[0] : res.data.data;
+                        const isBlocked = userData.status === "1";
+
+                        console.log('User Data:', userData);
+                        console.log('Is Blocked:', isBlocked);
+                        console.log('Full Name:', userData.full_name);
+                        console.log('Astrologer Details:', userData.astrologer_details);
+                        console.log('Government ID:', userData.astrologer_details?.goverment_id);
                         setIsLoading(false);
 
                         if (isBlocked) {
@@ -252,8 +253,8 @@ const OtpScreen = ({ route }) => {
                     } else {
                         console.log('Login failed');
                         setIsLoading(false);
-                        Alert.alert('Oops..', 'Something went wrong', [
-                            { text: 'OK', onPress: () => console.log('OK Pressed') },
+                        Alert.alert('Oops..', res?.data?.message || 'Something went wrong', [
+                            { text: 'OK', onPress: () => navigation.navigate('Onboarding') },
                         ]);
                     }
                 })

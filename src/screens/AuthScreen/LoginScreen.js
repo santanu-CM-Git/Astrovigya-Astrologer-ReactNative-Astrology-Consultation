@@ -301,7 +301,10 @@ const LoginScreen = ({  }) => {
           .then(res => {
             console.log(res.data.data,'kkkkkkkkkkkkk');
 
-            // Handle case where data might be an array
+           
+
+            if (res.data.response) {
+               // Handle case where data might be an array
             const userData = Array.isArray(res.data.data) ? res.data.data[0] : res.data.data;
             const isBlocked = userData.status === "1";
 
@@ -310,8 +313,6 @@ const LoginScreen = ({  }) => {
             console.log('Full Name:', userData.full_name);
             console.log('Astrologer Details:', userData.astrologer_details);
             console.log('Government ID:', userData.astrologer_details?.goverment_id);
-
-            if (res.data.response) {
               setIsLoading(false);
 
               if (isBlocked) {
@@ -348,8 +349,8 @@ const LoginScreen = ({  }) => {
             } else {
               console.log('Login failed');
               setIsLoading(false);
-              Alert.alert('Oops..', 'Something went wrong', [
-                { text: 'OK', onPress: () => console.log('OK Pressed') },
+              Alert.alert('Oops..', res?.data?.message || 'Something went wrong', [
+                { text: 'OK', onPress: () => navigation.navigate('Onboarding') },
               ]);
             }
           })

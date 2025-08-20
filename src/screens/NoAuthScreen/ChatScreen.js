@@ -60,7 +60,8 @@ const ChatScreen = ({  route }) => {
   const [activeTab, setActiveTab] = useState(route?.params?.commingFrom == 'from_chat' ? 'chat' : 'audio')
   const [isLoading, setIsLoading] = useState(false)
   const [timer, setTimer] = useState(route?.params?.details2?.available_min * 60);
-  const [endTime, setEndTime] = useState(moment().add(route?.params?.details2?.available_min, 'minutes').format('HH:mm:ss'));
+  //const [endTime, setEndTime] = useState(moment().add(route?.params?.details2?.available_min, 'minutes').format('HH:mm:ss'));
+  const [endTime, setEndTime] = useState(moment().add(route?.params?.details2?.available_min, 'minutes').toDate());
   const intervalRef = useRef(null);
   const [birthDetailsText, setBirthDetailsText] = useState([])
 
@@ -97,13 +98,30 @@ const ChatScreen = ({  route }) => {
   }, [routepage]);
 
 
+  // useEffect(() => {
+  //   if (endTime) {
+  //     intervalRef.current = BackgroundTimer.setInterval(() => {
+  //       const currentTime = new Date();
+  //       const endDate = moment(endTime, 'HH:mm:ss').toDate();
+  //       const timeDifferenceInSeconds = Math.max(0, Math.floor((endDate - currentTime) / 1000));
+  //       if (timeDifferenceInSeconds <= 0) {
+  //         BackgroundTimer.clearInterval(intervalRef.current);
+  //         handleTimerEnd();
+  //       }
+  //       setTimer(timeDifferenceInSeconds);
+  //     }, 1000);
+
+  //     return () => BackgroundTimer.clearInterval(intervalRef.current);
+  //   }
+  // }, [endTime]);
   useEffect(() => {
     if (endTime) {
       intervalRef.current = BackgroundTimer.setInterval(() => {
         const currentTime = new Date();
-        const endDate = moment(endTime, 'HH:mm:ss').toDate();
-        const timeDifferenceInSeconds = Math.max(0, Math.floor((endDate - currentTime) / 1000));
+        const timeDifferenceInSeconds = Math.max(0, Math.floor((endTime - currentTime) / 1000));
+        console.log('Timer tick - Current:', currentTime.toISOString(), 'End:', endTime.toISOString(), 'Remaining:', timeDifferenceInSeconds, 'seconds');
         if (timeDifferenceInSeconds <= 0) {
+          console.log('Timer ended - calling handleTimerEnd');
           BackgroundTimer.clearInterval(intervalRef.current);
           handleTimerEnd();
         }
@@ -115,9 +133,15 @@ const ChatScreen = ({  route }) => {
   }, [endTime]);
 
   const formatTime = (totalSeconds) => {
-    const minutes = Math.floor(totalSeconds / 60);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    if (hours > 0) {
+      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    } else {
+      return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
   };
 
   useEffect(() => {

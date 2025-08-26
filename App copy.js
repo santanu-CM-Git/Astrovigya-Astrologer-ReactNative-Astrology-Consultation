@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Provider } from 'react-redux';
-import { StatusBar, Platform, AppState } from 'react-native';
+import { StatusBar, Platform, AppState, DeviceEventEmitter } from 'react-native';
 import { AuthProvider } from './src/context/AuthContext';
 import AppNav from './src/navigation/AppNav';
 import store from './src/store/store';
@@ -20,6 +20,7 @@ function App() {
   const [notifications, setNotifications] = useState([]);
   const [notifyStatus, setnotifyStatus] = useState(false);
   const [appState, setAppState] = useState(AppState.currentState);
+  const setupInitialized = useRef(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -42,23 +43,35 @@ function App() {
 
   useEffect(() => {
     const setup = async () => {
+      // Prevent multiple initializations
+      if (setupInitialized.current) {
+        return;
+      }
+      setupInitialized.current = true;
+      
       await requestNotificationPermission();
       await createNotificationChannel();
 
       const unsubscribeForeground = messaging().onMessage(async remoteMessage => {
         console.log('📲 Foreground Message:', JSON.stringify(remoteMessage));
         
-        // Only show local notification if app is NOT in active/foreground state
-        if (appState !== 'active') {
-          showLocalNotification(remoteMessage);
-        } else {
-          // Handle foreground message without showing notification
-          console.log('App is active, not showing local notification');
+        // Handle session requests in foreground
+        if (remoteMessage.data?.screen === 'Session') {
+          const parsevalue = JSON.parse(remoteMessage?.data?.data);
           
-          // If it's a session request, you might want to show an in-app modal instead
-          if (remoteMessage.data?.screen === 'Session') {
-            console.log('Session request received while app is active');
-            // You can trigger an in-app modal/alert here instead of notification
+          // Emit event to CustomHeader components
+          DeviceEventEmitter.emit('SESSION_REQUEST_RECEIVED', parsevalue);
+          
+          // Only show local notification if app is NOT in active/foreground state
+          if (appState !== 'active') {
+            showLocalNotification(remoteMessage);
+          } else {
+            console.log('App is active, session request handled by CustomHeader');
+          }
+        } else {
+          // For other notifications, show local notification if not active
+          if (appState !== 'active') {
+            showLocalNotification(remoteMessage);
           }
         }
       });
@@ -69,75 +82,65 @@ function App() {
         await showLocalNotification(remoteMessage);
       });
 
+      // Handle foreground notification interactions (when app is open)
       notifee.onForegroundEvent(async ({ type, detail }) => {
         const notificationData = detail.notification?.data;
+        console.log('🔥 Foreground Event:', type, notificationData);
+        
         if (type === EventType.ACTION_PRESS) {
           if (detail.pressAction.id === 'accept') {
             console.log('Foreground: Accept pressed');
-            handleJoin(notificationData);
+            await handleJoin(notificationData);
           } else if (detail.pressAction.id === 'decline') {
             console.log('Foreground: Decline pressed');
-            handleReject(notificationData);
+            await handleReject(notificationData);
           }
+        }
+        
+        // Handle notification tap (opens app to specific screen)
+        if (type === EventType.PRESS) {
+          console.log('Notification pressed in foreground');
+          await handleNotificationPress(notificationData);
         }
       });
 
+      // Handle background notification interactions (when app is closed/minimized)
       notifee.onBackgroundEvent(async ({ type, detail }) => {
         const notificationData = detail.notification?.data;
+        console.log('🌙 Background Event:', type, notificationData);
+        
         if (type === EventType.ACTION_PRESS) {
           if (detail.pressAction.id === 'accept') {
             console.log('Background: Accept pressed');
-            handleJoin(notificationData);
+            await handleJoin(notificationData, true); // true indicates background
           } else if (detail.pressAction.id === 'decline') {
             console.log('Background: Decline pressed');
-            handleReject(notificationData);
+            await handleReject(notificationData);
           }
+        }
+        
+        // Handle notification tap from background
+        if (type === EventType.PRESS) {
+          console.log('Notification pressed in background');
+          await handleNotificationPress(notificationData);
         }
       });
 
+      // Handle notification that opened the app from background
       messaging().onNotificationOpenedApp(remoteMessage => {
         console.log('🔁 Notification opened from background:', remoteMessage);
-        // Try to navigate if this is a session accept
-        if (remoteMessage?.data?.screen === 'Session') {
-          let data = remoteMessage.data.data;
-          if (typeof data === 'string') {
-            try {
-              data = JSON.parse(data);
-            } catch (e) {
-              console.error('Failed to parse session data:', e, data);
-              return;
-            }
-          }
-          // You may want to fetch session details from server here if needed
-          navigate('ChatScreen', {
-            commingFrom: data.chat === '1' ? 'from_chat' : 'from_call',
-            details2: data,
-            details: {}, // You may want to fetch or pass details here
-          });
-          console.log('Navigation to ChatScreen from onNotificationOpenedApp');
-        }
+        setTimeout(() => {
+          handleNotificationNavigation(remoteMessage);
+        }, 1000); // Small delay to ensure navigation is ready
       });
 
+      // Handle notification that opened the app from quit state
       const initialNotification = await messaging().getInitialNotification();
       if (initialNotification) {
         console.log('🚀 Notification opened from quit:', initialNotification);
-        if (initialNotification?.data?.screen === 'Session') {
-          let data = initialNotification.data.data;
-          if (typeof data === 'string') {
-            try {
-              data = JSON.parse(data);
-            } catch (e) {
-              console.error('Failed to parse session data:', e, data);
-              return;
-            }
-          }
-          navigate('ChatScreen', {
-            commingFrom: data.chat === '1' ? 'from_chat' : 'from_call',
-            details2: data,
-            details: {}, // You may want to fetch or pass details here
-          });
-          console.log('Navigation to ChatScreen from getInitialNotification');
-        }
+        setTimeout(() => {
+          handleNotificationNavigation(initialNotification);
+        }, 2000); // Longer delay for app initialization
       }
 
       return () => {
@@ -146,9 +149,53 @@ function App() {
     };
 
     setup();
-  }, [appState]); // Add appState as dependency
+  }, []); // Remove appState dependency to prevent continuous re-renders
 
-  const requestNotificationPermission = async () => {
+  const handleNotificationNavigation = useCallback((remoteMessage) => {
+    if (remoteMessage?.data?.screen === 'Session') {
+      let data = remoteMessage.data.data;
+      if (typeof data === 'string') {
+        try {
+          data = JSON.parse(data);
+        } catch (e) {
+          console.error('Failed to parse session data:', e, data);
+          return;
+        }
+      }
+      
+      navigate('ChatScreen', {
+        commingFrom: data.chat === '1' ? 'from_chat' : 'from_call',
+        details2: data,
+        details: {}, // You may want to fetch fresh session details here
+      });
+      console.log('Navigation to ChatScreen completed');
+    }
+  }, []);
+
+  const handleNotificationPress = useCallback(async (notificationData) => {
+    if (notificationData?.screen === 'Session') {
+      let data = notificationData.data;
+      if (typeof data === 'string') {
+        try {
+          data = JSON.parse(data);
+        } catch (e) {
+          console.error('Failed to parse session data:', e, data);
+          return;
+        }
+      }
+      
+      // Navigate to the session screen
+      setTimeout(() => {
+        navigate('ChatScreen', {
+          commingFrom: data.chat === '1' ? 'from_chat' : 'from_call',
+          details2: data,
+          details: {},
+        });
+      }, 500);
+    }
+  }, []);
+
+  const requestNotificationPermission = useCallback(async () => {
     const settings = await notifee.requestPermission();
     if (settings.authorizationStatus >= 1) {
       console.log('✅ Notification permission granted');
@@ -159,9 +206,9 @@ function App() {
     const token = await messaging().getToken();
     console.log('📲 FCM Token:', token);
     await AsyncStorage.setItem('fcmToken', token);
-  };
+  }, []);
 
-  const createNotificationChannel = async () => {
+  const createNotificationChannel = useCallback(async () => {
     await notifee.createChannel({
       id: 'default',
       name: 'Default Channel',
@@ -170,12 +217,12 @@ function App() {
       lights: true,
       vibration: true,
     });
-  };
+  }, []);
 
-  const showLocalNotification = async (remoteMessage) => {
-    const { title, body, data } = remoteMessage.notification || remoteMessage;
+  const showLocalNotification = useCallback(async (remoteMessage) => {
+    const { title, body } = remoteMessage.notification || {};
     
-    // Check if it's a session request using the correct data structure
+    // Check if it's a session request
     const isCallRequest = remoteMessage.data?.screen === 'Session';
 
     await notifee.displayNotification({
@@ -185,49 +232,107 @@ function App() {
         channelId: 'default',
         pressAction: { id: 'default' },
         actions: isCallRequest ? [
-          { title: 'Accept', pressAction: { id: 'accept' } },
-          { title: 'Decline', pressAction: { id: 'decline' } },
+          { 
+            title: 'Accept', 
+            pressAction: { 
+              id: 'accept',
+              launchActivity: 'default' // This ensures the app opens
+            } 
+          },
+          { 
+            title: 'Decline', 
+            pressAction: { 
+              id: 'decline',
+              launchActivity: 'default' // This ensures the app opens
+            } 
+          },
         ] : [],
-        importance: 4, // IMPORTANCE_HIGH
-        autoCancel: false, // Keep notification until user interacts
-        ongoing: isCallRequest, // Make session requests persistent
+        importance: 4,
+        autoCancel: false,
+        ongoing: isCallRequest,
       },
-      data: remoteMessage.data,
+      data: {
+        ...remoteMessage.data,
+        // Ensure data is properly formatted for later retrieval
+        originalData: JSON.stringify(remoteMessage.data)
+      },
     });
-  };
+  }, []);
 
-  const handleJoin = async (sessionDetails) => {
-    console.log('🔄 Handling join for session:', sessionDetails);
-    if (sessionDetails) {
-      let data = sessionDetails.data;
-      if (typeof data === 'string') {
-        try {
-          data = JSON.parse(data);
-        } catch (e) {
-          console.error('Failed to parse session data:', e, data);
-          return;
-        }
+  const handleJoin = useCallback(async (sessionDetails, fromBackground = false) => {
+    console.log('🔄 Handling join for session:', sessionDetails, 'from background:', fromBackground);
+    
+    let data = sessionDetails.data || sessionDetails;
+    
+    // Handle different data formats
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        console.error('Failed to parse session data:', e, data);
+        return;
       }
-      await acceptInvitation(data.id, data);
     }
-  };
 
-  const handleReject = async (sessionDetails) => {
-    if (sessionDetails) {
-      let data = sessionDetails.data;
-      if (typeof data === 'string') {
-        try {
-          data = JSON.parse(data);
-        } catch (e) {
-          console.error('Failed to parse session data:', e, data);
-          return;
-        }
+    // If we have original data, use that
+    if (sessionDetails.originalData) {
+      try {
+        const originalData = JSON.parse(sessionDetails.originalData);
+        const innerData = JSON.parse(originalData.data);
+        data = innerData;
+      } catch (e) {
+        console.error('Failed to parse original data:', e);
       }
+    }
+
+    if (data?.id) {
+      const success = await acceptInvitation(data.id, data, fromBackground);
+      
+      // If accept was successful and we're coming from background, navigate
+      if (success && fromBackground) {
+        setTimeout(() => {
+          navigate('ChatScreen', {
+            commingFrom: data.chat === '1' ? 'from_chat' : 'from_call',
+            details2: data,
+            details: success.sessionData || {},
+          });
+          console.log('Navigation to ChatScreen from background accept');
+        }, 1000);
+      }
+    }
+  }, []);
+
+  const handleReject = useCallback(async (sessionDetails) => {
+    console.log('❌ Handling reject for session:', sessionDetails);
+    
+    let data = sessionDetails.data || sessionDetails;
+    
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        console.error('Failed to parse session data:', e, data);
+        return;
+      }
+    }
+
+    // Handle original data format
+    if (sessionDetails.originalData) {
+      try {
+        const originalData = JSON.parse(sessionDetails.originalData);
+        const innerData = JSON.parse(originalData.data);
+        data = innerData;
+      } catch (e) {
+        console.error('Failed to parse original data:', e);
+      }
+    }
+
+    if (data?.id) {
       await cancelInvitation(data.id);
     }
-  };
+  }, []);
 
-  const cancelInvitation = async (sessionId) => {
+  const cancelInvitation = useCallback(async (sessionId) => {
     try {
       console.log('Cancelling session:', sessionId);
       const userToken = await AsyncStorage.getItem('userToken');
@@ -249,23 +354,25 @@ function App() {
 
       console.log('❌ Session cancelled:', response.data);
       
-      // Dismiss the notification after successful cancellation
+      // Dismiss all notifications after successful cancellation
       await notifee.cancelAllNotifications();
       
+      return response.data.response === true;
     } catch (error) {
       console.error('Cancel session error:', error.response?.data || error.message || error);
+      return false;
     }
-  };
+  }, []);
 
-  const acceptInvitation = async (sessionId, data) => {
+  const acceptInvitation = useCallback(async (sessionId, data, fromBackground = false) => {
     try {
       console.log('Accepting session:', sessionId, 'with data:', data);
       const userToken = await AsyncStorage.getItem('userToken');
       if (!userToken) {
         console.error('No user token found');
-        return;
+        return false;
       }
-
+      
       const response = await axios.post(
         `${API_URL}/astrologer/astrologer-accept-session`,
         { session_id: sessionId },
@@ -280,43 +387,33 @@ function App() {
       console.log('✅ Accept session response:', response.data);
 
       if (response.data.response === true) {
-        const chat = data.chat;
-        // Dismiss the notification after successful acceptance
-        
-        console.log('Navigating to ChatScreen with:', {
-          commingFrom: chat === '1' ? 'from_chat' : 'from_call',
-          details2: data,
-          details: response.data.data,
-        });
-        setTimeout(() => {
-          navigate('ChatScreen', {
-            commingFrom: chat === '1' ? 'from_chat' : 'from_call',
-            details2: data,
-            details: response.data.data,
-          });
-          console.log('Navigation to ChatScreen called');
-        }, 500);
+        // Dismiss notifications after successful acceptance
         await notifee.cancelAllNotifications();
-        // Show follow-up notification if app is not in foreground
-        if (appState !== 'active') {
-          await notifee.displayNotification({
-            title: 'Session Accepted',
-            body: 'Tap to join the chat session.',
-            android: {
-              channelId: 'default',
-              pressAction: { id: 'default' },
-            },
-            data: {
-              screen: 'Session',
-              data: JSON.stringify(data),
-            },
-          });
+        
+        // If app is in foreground and not from background action, navigate immediately
+        if (appState === 'active' && !fromBackground) {
+          setTimeout(() => {
+            navigate('ChatScreen', {
+              commingFrom: data.chat === '1' ? 'from_chat' : 'from_call',
+              details2: data,
+              details: response.data.data,
+            });
+            console.log('Navigation to ChatScreen from foreground accept');
+          }, 500);
         }
+        
+        return {
+          success: true,
+          sessionData: response.data.data
+        };
       }
+      
+      return false;
     } catch (error) {
       console.error('Accept session error:', error.response?.data || error.message || error);
+      return false;
     }
-  };
+  }, [appState]);
 
   return (
     <Provider store={store}>

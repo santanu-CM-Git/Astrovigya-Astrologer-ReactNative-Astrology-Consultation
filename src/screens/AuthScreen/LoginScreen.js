@@ -10,7 +10,8 @@ import {
   Dimensions,
   Image,
   StatusBar,
-  Platform
+  Platform,
+  Keyboard
 } from 'react-native';
 import axios from 'axios';
 import CheckBox from '@react-native-community/checkbox';
@@ -19,7 +20,6 @@ import CustomButton from '../../components/CustomButton';
 import InputField from '../../components/InputField';
 import { AuthContext } from '../../context/AuthContext';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
-// import DeviceInfo from 'react-native-device-info';
 import Loader from '../../utils/Loader';
 import { CountryPicker } from "react-native-country-codes-picker";
 import LinearGradient from 'react-native-linear-gradient';
@@ -48,14 +48,13 @@ const LoginScreen = ({  }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [toggleCheckBox, setToggleCheckBox] = useState(true)
   const [showfield, setShowfield] = useState('mobile');
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   const { login, userToken } = useContext(AuthContext);
 
   const getFCMToken = async () => {
     try {
-      // if (Platform.OS == 'android') {
       await messaging().registerDeviceForRemoteMessages();
-      // }
       const token = await messaging().getToken();
       AsyncStorage.setItem('fcmToken', token)
       console.log(token, 'fcm token');
@@ -66,6 +65,20 @@ const LoginScreen = ({  }) => {
 
   useEffect(() => {
     getFCMToken()
+    
+    // Add keyboard listeners for better handling
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      keyboardDidShowListener?.remove();
+      keyboardDidHideListener?.remove();
+    };
   }, [])
 
   useEffect(() => {
@@ -94,6 +107,7 @@ const LoginScreen = ({  }) => {
       setMobileError('')
     }
   }
+  
   const changeEmail = (text) => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if (reg.test(text) === false) {
@@ -110,23 +124,23 @@ const LoginScreen = ({  }) => {
   }
 
   const changeToEmail = () => {
+    // Dismiss keyboard before switching fields
+    Keyboard.dismiss();
+    
     if (showfield == 'mobile') {
       setShowfield('email')
     } else {
       setShowfield('mobile')
     }
-
   }
 
   const handleSubmitForMobile = () => {
-
     const phoneRegex = /^\d{10}$/;
     if (!phone) {
       setMobileError(t('login.PleaseenterMobileno'))
     } else if (!phoneRegex.test(phone)) {
       setMobileError(t('login.Pleaseentera10digitnumber'))
     } else {
-      //navigation.navigate('Otp', { phone: phone, otp: '2345', token: 'sfsdfdsf', name: 'name' })
       setIsLoading(true)
       AsyncStorage.getItem('fcmToken', async(err, fcmToken) => {
         const savedLang = await AsyncStorage.getItem('selectedLanguage');
@@ -134,7 +148,6 @@ const LoginScreen = ({  }) => {
         const option = {
           "mobile": phone,
           "firebase_token": fcmToken,
-          //"deviceid": deviceId,
         }
         console.log(option)
         console.log(API_URL)
@@ -142,7 +155,6 @@ const LoginScreen = ({  }) => {
           headers: {
             'Accept': 'application/json',
             'Accept-Language':savedLang,
-            //'Content-Type': 'multipart/form-data',
           },
         })
           .then(res => {
@@ -156,8 +168,6 @@ const LoginScreen = ({  }) => {
                 position: 'top',
                 topOffset: Platform.OS == 'ios' ? 55 : 20
               });
-              //alert(res.data?.data)
-              // login(res.data.token)
               navigation.navigate('Otp', { phone: phone, otp: res.data?.data })
             } else {
               console.log('not okk')
@@ -187,94 +197,7 @@ const LoginScreen = ({  }) => {
           });
       });
     }
-
   }
-  // const handleSubmitForEmail = () => {
-
-  //   if (!email) {
-  //     setEmailError('Please enter Email Id.')
-  //   } else if (!password) {
-  //     setPasswordError('Please enter a Password.')
-  //   } else {
-  //     //navigation.navigate('Otp', { phone: phone, otp: '2345', token: 'sfsdfdsf', name: 'name' })
-  //     setIsLoading(true)
-  //     AsyncStorage.getItem('fcmToken', (err, fcmToken) => {
-  //       console.log(fcmToken, 'firebase token')
-  //       const option = {
-  //         "email": email,
-  //         "password": password,
-  //         "firebase_token": fcmToken,
-  //         //"deviceid": deviceId,
-  //       }
-  //       axios.post(`${API_URL}/astrologer-login`, option, {
-  //         headers: {
-  //           'Accept': 'application/json',
-  //           //'Content-Type': 'multipart/form-data',
-  //         },
-  //       })
-  //         .then(res => {
-  //           console.log(res.data)
-  //           console.log(res.data.data[0].blocked_by_admin, 'admin aproval')
-  //           if (res.data.response == true) {
-  //             setIsLoading(false)
-  //             if (res.data.data[0].blocked_by_admin == 1) {
-  //               login();
-  //             } else {
-  //               if (res.data.data[0].full_name && res.data.data[0].astrologer_details && res.data.data[0].astrologer_details.goverment_id) {
-  //                 Alert.alert('Hello', "Please wait for admin approval", [
-  //                   { text: 'OK', onPress: () => navigation.navigate('Onboarding') },
-  //                 ]);
-  //               } else {
-  //                 if (res.data.data[0].full_name) {
-  //                   if (res.data.data[0].astrologer_details) {
-  //                     if (res.data.data[0].astrologer_details.goverment_id) {
-  //                       login();
-  //                     } else {
-  //                       navigation.navigate('PersonalInformationThree', { token: res?.data?.token });
-  //                     }
-  //                   } else {
-  //                     navigation.navigate('PersonalInformationTwo', { token: res?.data?.token });
-  //                   }
-  //                 } else {
-  //                   navigation.navigate('PersonalInformation', {
-  //                     token: res?.data?.token,
-  //                     phoneno: res?.data?.data[0]?.mobile,
-  //                     email: res?.data?.data[0]?.email
-  //                   });
-  //                 }
-  //               }
-
-  //             }
-
-  //           } else {
-  //             console.log('not okk')
-  //             setIsLoading(false)
-  //             Alert.alert('Oops..', "Something went wrong", [
-  //               {
-  //                 text: 'Cancel',
-  //                 onPress: () => console.log('Cancel Pressed'),
-  //                 style: 'cancel',
-  //               },
-  //               { text: 'OK', onPress: () => console.log('OK Pressed') },
-  //             ]);
-  //           }
-  //         })
-  //         .catch(e => {
-  //           setIsLoading(false)
-  //           console.log(`user login error ${e}`)
-  //           console.log(e.response)
-  //           Alert.alert('Oops..', e.response?.data?.message, [
-  //             {
-  //               text: 'Cancel',
-  //               onPress: () => console.log('Cancel Pressed'),
-  //               style: 'cancel',
-  //             },
-  //             { text: 'OK', onPress: () => console.log('OK Pressed') },
-  //           ]);
-  //         });
-  //     });
-  //   }
-  // }
 
   const handleSubmitForEmail = () => {
     if (!email) {
@@ -300,8 +223,6 @@ const LoginScreen = ({  }) => {
         })
           .then(res => {
             console.log(res.data.data,'kkkkkkkkkkkkk');
-
-           
 
             if (res.data.response) {
                // Handle case where data might be an array
@@ -365,7 +286,6 @@ const LoginScreen = ({  }) => {
     }
   };
 
-
   if (isLoading) {
     return (
       <Loader />
@@ -375,7 +295,19 @@ const LoginScreen = ({  }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar translucent backgroundColor="transparent" />
-      <KeyboardAwareScrollView>
+      <KeyboardAwareScrollView
+        style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1 }}
+        enableOnAndroid={true}
+        enableAutomaticScroll={Platform.OS === 'ios'}
+        extraHeight={130}
+        extraScrollHeight={130}
+        keyboardOpeningTime={0}
+        resetScrollToCoords={{ x: 0, y: 0 }}
+        scrollEnabled={true}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
         <View style={[styles.bannaerContainer, { height: showfield == 'email' ? responsiveHeight(38) : responsiveHeight(50) }]}>
           <Image
             source={require('../../assets/images/Rectangle6.png')}
@@ -414,6 +346,9 @@ const LoginScreen = ({  }) => {
                   value={phone}
                   inputType={'others'}
                   onChangeText={(text) => onChangeText(text)}
+                  autoFocus={false}
+                  returnKeyType="done"
+                  blurOnSubmit={true}
                 />
               </View>
             </>
@@ -426,10 +361,15 @@ const LoginScreen = ({  }) => {
               <View style={styles.textinputview}>
                 <InputField
                   label={t('login.emailplaceholder')}
-                  keyboardType="email"
+                  keyboardType="email-address"
                   value={email}
                   inputType={'email'}
                   onChangeText={(text) => changeEmail(text)}
+                  autoFocus={false}
+                  returnKeyType="next"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  blurOnSubmit={false}
                 />
               </View>
               <View style={{ marginBottom: responsiveHeight(0) }}>
@@ -439,49 +379,58 @@ const LoginScreen = ({  }) => {
               <View style={styles.textinputview}>
                 <InputField
                   label={t('login.passwordplaceholder')}
-                  keyboardType=""
+                  keyboardType="default"
                   value={password}
                   inputType={'password'}
                   onChangeText={(text) => setPassword(text)}
+                  autoFocus={false}
+                  returnKeyType="done"
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  blurOnSubmit={true}
                 />
               </View>
             </>
           }
         </View>
-      </KeyboardAwareScrollView>
-
-      <View style={styles.buttonwrapper}>
-        <CustomButton
-          label={showfield == 'mobile' ? t('login.sentotp') : t('login.exploreastrologer')}
-          onPress={() => showfield == 'mobile' ? handleSubmitForMobile() : handleSubmitForEmail()}
-        // onPress={() => { navigation.push('Otp', { phoneno: phone }) }}
-        />
-      </View>
-      <View style={styles.termsView}>
-        <View style={styles.checkboxContainer}>
-          <CheckBox
-            disabled={false}
-            value={toggleCheckBox}
-            onValueChange={(newValue) => setToggleCheckBox(newValue)}
-            tintColors={{ true: '#FB7401', false: '#444343' }}
+        
+        {/* Move buttons and terms inside ScrollView for better keyboard handling */}
+        <View style={styles.bottomSection}>
+          <View style={styles.buttonwrapper}>
+            <CustomButton
+              label={showfield == 'mobile' ? t('login.sentotp') : t('login.exploreastrologer')}
+              onPress={() => showfield == 'mobile' ? handleSubmitForMobile() : handleSubmitForEmail()}
+            />
+          </View>
+          
+          <View style={styles.termsView}>
+            <View style={styles.checkboxContainer}>
+              <CheckBox
+                disabled={false}
+                value={toggleCheckBox}
+                onValueChange={(newValue) => setToggleCheckBox(newValue)}
+                tintColors={{ true: '#FB7401', false: '#444343' }}
+              />
+            </View>
+            <Text style={styles.termsText}>{t('login.termstext1')} <Text style={styles.boldtermsText}> {t('login.termstext2')}</Text> {t('login.termstext3')} <Text style={styles.boldtermsText}>{t('login.termstext4')}</Text></Text>
+          </View>
+          
+          <Image
+            source={orImg}
+            style={styles.orImg}
           />
+          
+          <View style={styles.buttonwrapper}>
+            <CustomButton label={showfield == 'mobile' ? t('login.emaillogin') : t('login.mobilelogin')}
+              onPress={() => changeToEmail()}
+              buttonColor='gray'
+            />
+          </View>
         </View>
-        <Text style={styles.termsText}>{t('login.termstext1')} <Text style={styles.boldtermsText}> {t('login.termstext2')}</Text> {t('login.termstext3')} <Text style={styles.boldtermsText}>{t('login.termstext4')}</Text></Text>
-      </View>
-      <Image
-        source={orImg}
-        style={styles.orImg}
-      />
-      <View style={styles.buttonwrapper}>
-        <CustomButton label={showfield == 'mobile' ? t('login.emaillogin') : t('login.mobilelogin')}
-          onPress={() => changeToEmail()}
-          buttonColor='gray'
-        />
-      </View>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -499,10 +448,16 @@ const styles = StyleSheet.create({
   textinputview: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    //marginBottom: responsiveHeight(1)
+    marginBottom: responsiveHeight(2)
+  },
+  bottomSection: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingBottom: Platform.OS === 'ios' ? 20 : 10,
   },
   buttonwrapper: {
     paddingHorizontal: 20,
+    marginBottom: responsiveHeight(1),
   },
   countryInputView: {
     height: responsiveHeight(7),
@@ -519,9 +474,6 @@ const styles = StyleSheet.create({
   },
   bannerBg: {
     flex: 1,
-    //position: 'absolute',
-    //right: 0,
-    // bottom: 20,
     height: '100%',
     width: '100%',
     resizeMode: 'cover',
@@ -543,7 +495,6 @@ const styles = StyleSheet.create({
     color: '#746868',
     fontFamily: 'PlusJakartaSans-Regular',
     fontSize: responsiveFontSize(1.5),
-
   },
   boldtermsText: {
     color: '#1E2023',
@@ -554,17 +505,18 @@ const styles = StyleSheet.create({
     height: responsiveHeight(10),
     width: responsiveWidth(80),
     resizeMode: 'contain',
-    alignSelf: "center"
+    alignSelf: "center",
+    marginBottom: responsiveHeight(1),
   },
   checkboxContainer: {
     ...Platform.select({
       ios: {
-          transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }]  // Adjust scale values as needed
+          transform: [{ scaleX: 0.7 }, { scaleY: 0.7 }]
       },
       android: {
-          transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }]  // Adjust scale values as needed
+          transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }]
       }
-  }),
+    }),
     marginRight: responsiveWidth(2)
   },
   iconContainer: {
@@ -580,7 +532,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2),
     color: '#3C2200',
     textAlign: 'center',
-    marginBottom: '1%', // 5% margin at the bottom,
+    marginBottom: '1%',
     fontFamily: 'PlusJakartaSans-Regular'
   },
   bannerContain: {
@@ -607,6 +559,5 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(1.4),
   },
 });
-
 
 export default withTranslation()(LoginScreen);

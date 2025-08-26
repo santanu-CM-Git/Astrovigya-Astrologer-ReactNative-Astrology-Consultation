@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { Provider } from 'react-redux';
 import { StatusBar, Platform, AppState, DeviceEventEmitter } from 'react-native';
 import { AuthProvider } from './src/context/AuthContext';
@@ -20,6 +20,7 @@ function App() {
   const [notifications, setNotifications] = useState([]);
   const [notifyStatus, setnotifyStatus] = useState(false);
   const [appState, setAppState] = useState(AppState.currentState);
+  const setupInitialized = useRef(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -42,6 +43,12 @@ function App() {
 
   useEffect(() => {
     const setup = async () => {
+      // Prevent multiple initializations
+      if (setupInitialized.current) {
+        return;
+      }
+      setupInitialized.current = true;
+      
       await requestNotificationPermission();
       await createNotificationChannel();
 
@@ -142,9 +149,9 @@ function App() {
     };
 
     setup();
-  }, [appState]);
+  }, []); // Remove appState dependency to prevent continuous re-renders
 
-  const handleNotificationNavigation = (remoteMessage) => {
+  const handleNotificationNavigation = useCallback((remoteMessage) => {
     if (remoteMessage?.data?.screen === 'Session') {
       let data = remoteMessage.data.data;
       if (typeof data === 'string') {
@@ -163,9 +170,9 @@ function App() {
       });
       console.log('Navigation to ChatScreen completed');
     }
-  };
+  }, []);
 
-  const handleNotificationPress = async (notificationData) => {
+  const handleNotificationPress = useCallback(async (notificationData) => {
     if (notificationData?.screen === 'Session') {
       let data = notificationData.data;
       if (typeof data === 'string') {
@@ -186,9 +193,9 @@ function App() {
         });
       }, 500);
     }
-  };
+  }, []);
 
-  const requestNotificationPermission = async () => {
+  const requestNotificationPermission = useCallback(async () => {
     const settings = await notifee.requestPermission();
     if (settings.authorizationStatus >= 1) {
       console.log('✅ Notification permission granted');
@@ -199,9 +206,9 @@ function App() {
     const token = await messaging().getToken();
     console.log('📲 FCM Token:', token);
     await AsyncStorage.setItem('fcmToken', token);
-  };
+  }, []);
 
-  const createNotificationChannel = async () => {
+  const createNotificationChannel = useCallback(async () => {
     await notifee.createChannel({
       id: 'default',
       name: 'Default Channel',
@@ -210,9 +217,9 @@ function App() {
       lights: true,
       vibration: true,
     });
-  };
+  }, []);
 
-  const showLocalNotification = async (remoteMessage) => {
+  const showLocalNotification = useCallback(async (remoteMessage) => {
     const { title, body } = remoteMessage.notification || {};
     
     // Check if it's a session request
@@ -250,9 +257,9 @@ function App() {
         originalData: JSON.stringify(remoteMessage.data)
       },
     });
-  };
+  }, []);
 
-  const handleJoin = async (sessionDetails, fromBackground = false) => {
+  const handleJoin = useCallback(async (sessionDetails, fromBackground = false) => {
     console.log('🔄 Handling join for session:', sessionDetails, 'from background:', fromBackground);
     
     let data = sessionDetails.data || sessionDetails;
@@ -293,9 +300,9 @@ function App() {
         }, 1000);
       }
     }
-  };
+  }, []);
 
-  const handleReject = async (sessionDetails) => {
+  const handleReject = useCallback(async (sessionDetails) => {
     console.log('❌ Handling reject for session:', sessionDetails);
     
     let data = sessionDetails.data || sessionDetails;
@@ -323,9 +330,9 @@ function App() {
     if (data?.id) {
       await cancelInvitation(data.id);
     }
-  };
+  }, []);
 
-  const cancelInvitation = async (sessionId) => {
+  const cancelInvitation = useCallback(async (sessionId) => {
     try {
       console.log('Cancelling session:', sessionId);
       const userToken = await AsyncStorage.getItem('userToken');
@@ -355,9 +362,9 @@ function App() {
       console.error('Cancel session error:', error.response?.data || error.message || error);
       return false;
     }
-  };
+  }, []);
 
-  const acceptInvitation = async (sessionId, data, fromBackground = false) => {
+  const acceptInvitation = useCallback(async (sessionId, data, fromBackground = false) => {
     try {
       console.log('Accepting session:', sessionId, 'with data:', data);
       const userToken = await AsyncStorage.getItem('userToken');
@@ -365,7 +372,7 @@ function App() {
         console.error('No user token found');
         return false;
       }
-
+      
       const response = await axios.post(
         `${API_URL}/astrologer/astrologer-accept-session`,
         { session_id: sessionId },
@@ -406,7 +413,7 @@ function App() {
       console.error('Accept session error:', error.response?.data || error.message || error);
       return false;
     }
-  };
+  }, [appState]);
 
   return (
     <Provider store={store}>

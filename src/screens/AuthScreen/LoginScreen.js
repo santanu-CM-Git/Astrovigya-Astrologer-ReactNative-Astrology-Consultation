@@ -38,6 +38,8 @@ const { height, width } = Dimensions.get('screen')
 const LoginScreen = ({  }) => {
   const { t, i18n } = useTranslation();
   const navigation = useNavigation();
+  
+
   const [langvalue, setLangValue] = useState('en');
   const [phone, setPhone] = useState('');
   const [mobileError, setMobileError] = useState('')

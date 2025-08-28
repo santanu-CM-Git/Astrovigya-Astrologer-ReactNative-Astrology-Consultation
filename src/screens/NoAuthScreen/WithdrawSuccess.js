@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, Animated, Image, Platform, Alert, FlatList, TextInput } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Animated, Image, Platform, Alert, FlatList, TextInput } from 'react-native'
 import CustomHeader from '../../components/CustomHeader'
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions'
 import { ArrowDown, ArrowGratter, ArrowUp, GreenTick, Payment, RedCross, YellowTck, bankImg, cardArrowImg, dateIcon, notifyImg, timeIcon, userPhoto } from '../../utils/Images'
@@ -16,7 +16,7 @@ import { API_URL } from '@env'
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { withTranslation, useTranslation } from 'react-i18next';
-
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const WithdrawSuccess = ({  }) => {
     const navigation = useNavigation();

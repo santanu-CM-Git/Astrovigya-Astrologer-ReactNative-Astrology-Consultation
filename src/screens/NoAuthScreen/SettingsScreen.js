@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, Image, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Alert } from 'react-native';
 import CustomHeader from '../../components/CustomHeader';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { languageMenu, privacyMenu, termsMenu, logoutMenu, ArrowGratter, aboutusMenu } from '../../utils/Images';
@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { API_URL } from '@env'
 import Loader from '../../utils/Loader';
-
+import { SafeAreaView } from 'react-native-safe-area-context'
 const SettingsScreen = ({ }) => {
     const navigation = useNavigation();
     const { t, i18n } = useTranslation();

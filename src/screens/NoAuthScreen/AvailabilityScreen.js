@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, Switch, Image, Platform, Alert, Button, Pressable, TouchableWithoutFeedback, FlatList } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Switch, Image, Platform, Alert, Button, Pressable, TouchableWithoutFeedback, FlatList } from 'react-native'
 import CustomHeader from '../../components/CustomHeader'
 import CustomButton from '../../components/CustomButton';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions'
@@ -21,6 +21,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { TouchableOpacity } from 'react-native';
 import { withTranslation, useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context'
 const data = [
     { label: 'January', value: 'January' },
     { label: 'February', value: 'February' },

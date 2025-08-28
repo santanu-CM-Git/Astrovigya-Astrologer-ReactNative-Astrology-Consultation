@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import { StyleSheet, SafeAreaView, View, Text, TouchableOpacity, Image, Platform } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Logo from '../../assets/images/misc/logo.svg';
 import LinearGradient from 'react-native-linear-gradient';
@@ -8,7 +8,7 @@ import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-nat
 import { withTranslation, useTranslation } from 'react-i18next';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
-
+import { SafeAreaView } from 'react-native-safe-area-context'
 const language = [
   { label: 'English', value: 'en' },
   { label: 'हिंदी', value: 'hi' }

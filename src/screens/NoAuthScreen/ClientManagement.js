@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, Dimensions, Image, Platform, Alert, FlatList } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Dimensions, Image, Platform, Alert, FlatList } from 'react-native'
 import CustomHeader from '../../components/CustomHeader'
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -18,7 +18,7 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import SwitchSelector from "react-native-switch-selector";
 import Tooltip from 'react-native-walkthrough-tooltip';
 import { withTranslation, useTranslation } from 'react-i18next';
-
+import { SafeAreaView } from 'react-native-safe-area-context'
 const renderConsultation = ({ item, navigation }) => (
 
     <View style={styles.chatItemWrapper}>

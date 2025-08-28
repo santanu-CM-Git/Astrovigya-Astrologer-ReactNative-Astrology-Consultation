@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, ImageBackground, Image } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, ImageBackground, Image } from 'react-native'
 import CustomHeader from '../../components/CustomHeader'
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { nocallImg, nochatImg, noremediesImg, notificationImg, notifyImg } from '../../utils/Images'
 import { withTranslation, useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const NoRemediesScreen = ({  }) => {
     const navigation = useNavigation();

@@ -15,6 +15,7 @@ import notifee, { EventType } from '@notifee/react-native';
 import axios from 'axios';
 import { NavigationContainer } from '@react-navigation/native';
 import { navigationRef, navigate } from './src/navigation/RootNavigation';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 function App() {
   const [notifications, setNotifications] = useState([]);
@@ -400,6 +401,7 @@ function App() {
 
   return (
     <Provider store={store}>
+      <SafeAreaProvider>
       <StatusBar backgroundColor="#EFDFC9" />
       <OfflineNotice />
       <AuthProvider>
@@ -408,6 +410,7 @@ function App() {
         </NavigationContainer>
       </AuthProvider>
       <Toast />
+      </SafeAreaProvider>
     </Provider>
   );
 }

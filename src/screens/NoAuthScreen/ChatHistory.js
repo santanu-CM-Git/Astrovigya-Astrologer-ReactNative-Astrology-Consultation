@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react'
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, ImageBackground, Image, PermissionsAndroid, Alert, BackHandler, Platform } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, ImageBackground, Image, PermissionsAndroid, Alert, BackHandler, Platform } from 'react-native'
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { GreenTick, audiooffIcon, audioonIcon, callIcon, chatImg, filesendImg, sendImg } from '../../utils/Images'
@@ -19,7 +19,7 @@ import axios from 'axios'
 import { useFocusEffect } from '@react-navigation/native';
 import { withTranslation, useTranslation } from 'react-i18next';
 import CustomHeader from '../../components/CustomHeader'
-
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 
 const ChatHistory = ({ route }) => {

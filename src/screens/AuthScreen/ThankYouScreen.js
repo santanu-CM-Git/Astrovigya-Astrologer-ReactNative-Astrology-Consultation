@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, Image, BackHandler } from 'react-native';
+import { View, Text, TouchableOpacity, Image, BackHandler } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Thankyou from '../..//assets/images/misc/Thankyou.svg';
@@ -9,6 +9,7 @@ import CustomButton from '../../components/CustomButton';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { acceptImg } from '../../utils/Images';
 import { withTranslation, useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const ThankYouScreen = ({  }) => {
   const navigation = useNavigation();

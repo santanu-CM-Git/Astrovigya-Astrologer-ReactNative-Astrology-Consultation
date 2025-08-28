@@ -1,6 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   View,
   Text,
@@ -32,6 +31,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { withTranslation, useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const dataGender = [
   { label: 'Male', value: 'Male' },

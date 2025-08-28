@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import {
-    SafeAreaView,
     View,
     Text,
     TextInput,
@@ -24,6 +23,7 @@ import { withTranslation, useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 // import OTPVerify from 'react-native-otp-verify';
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const OtpScreen = ({ route }) => {
     const navigation = useNavigation();

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, Switch, Image, Platform, Alert, Button } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Switch, Image, Platform, Alert, Button } from 'react-native'
 import CustomHeader from '../../components/CustomHeader'
 import CustomButton from '../../components/CustomButton';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions'
@@ -20,7 +20,7 @@ import Loader from '../../utils/Loader';
 import InputField from '../../components/InputField';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { withTranslation, useTranslation } from 'react-i18next';
-
+import { SafeAreaView } from 'react-native-safe-area-context'
 const ServiceScreen = ({  }) => {
     const navigation = useNavigation();
     const { t, i18n } = useTranslation();

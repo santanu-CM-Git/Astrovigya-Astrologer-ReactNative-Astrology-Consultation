@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import {
   View,
   Text,
-  SafeAreaView,
   ScrollView,
   Image,
   TextInput,
@@ -44,6 +43,7 @@ import { ActivityIndicator } from '@react-native-material/core';
 import ChatRequestModal from '../../components/ChatRequestModal';
 import notifee, { EventType } from '@notifee/react-native';
 import { withTranslation, useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const HomeScreen = ({  }) => {
   const navigation = useNavigation();

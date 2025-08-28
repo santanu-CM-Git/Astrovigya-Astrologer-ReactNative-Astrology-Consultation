@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
 import {
-    SafeAreaView,
     View,
     Text,
     TextInput,
@@ -28,7 +27,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ForgotPass from '../..//assets/images/misc/forgotPass.svg';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
-
+import { SafeAreaView } from 'react-native-safe-area-context'
 const BannerWidth = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(BannerWidth * 0.7)
 const { height, width } = Dimensions.get('screen')

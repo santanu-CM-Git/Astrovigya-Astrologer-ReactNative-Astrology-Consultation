@@ -1,6 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import {
-  SafeAreaView,
   ScrollView,
   View,
   Text,
@@ -32,6 +31,7 @@ import { withTranslation, useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import moment from 'moment-timezone';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const dataGender = [
   { label: 'Male', value: 'Male' },

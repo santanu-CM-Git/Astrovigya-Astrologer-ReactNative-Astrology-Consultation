@@ -1,6 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import {
-    SafeAreaView,
     ScrollView,
     View,
     Text,
@@ -31,7 +30,7 @@ import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { withTranslation, useTranslation } from 'react-i18next';
-
+import { SafeAreaView } from 'react-native-safe-area-context'
 const UploadBankDetails = ({ route }) => {
     const navigation = useNavigation();
     const { t, i18n } = useTranslation();

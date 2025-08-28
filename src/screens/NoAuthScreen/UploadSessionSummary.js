@@ -1,6 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
 import {
-    SafeAreaView,
     ScrollView,
     View,
     Text,
@@ -30,6 +29,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context'
 const items = [
     { id: '92iijs7yta', name: 'Ondo' },
     { id: 'a0s0a8ssbsd', name: 'Ogun' },

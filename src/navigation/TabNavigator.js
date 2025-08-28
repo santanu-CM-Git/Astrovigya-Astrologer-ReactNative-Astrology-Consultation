@@ -31,6 +31,7 @@ import WithdrawSuccess from '../screens/NoAuthScreen/WithdrawSuccess';
 import CustomerSupport from '../screens/NoAuthScreen/CustomerSupport';
 import ReviewScreen from '../screens/NoAuthScreen/ReviewScreen';
 import ChatHistory from '../screens/NoAuthScreen/ChatHistory';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { withTranslation, useTranslation } from 'react-i18next';
 
@@ -164,6 +165,7 @@ const TabNavigator = () => {
   const { t, i18n } = useTranslation();
   const cartProducts = useSelector(state => state.cart)
   console.log(cartProducts)
+  const insets = useSafeAreaInsets();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -172,7 +174,11 @@ const TabNavigator = () => {
         tabBarInactiveTintColor: '#CACCCE',
         tabBarActiveTintColor: '#FB7401',
         tabBarStyle: {
-          height: 100,
+          height: Platform.select({
+            android: responsiveHeight(8) + insets.bottom, // Add bottom safe area
+            ios: responsiveHeight(11) + insets.bottom, // Add bottom safe area
+          }),
+          paddingBottom: insets.bottom, // Add padding for safe area
         },
       }}>
       <Tab.Screen
@@ -184,10 +190,12 @@ const TabNavigator = () => {
             backgroundColor: '#FFFFFF',
             width: responsiveWidth(100),
             height: Platform.select({
-              android: responsiveHeight(8),
-              ios: responsiveHeight(11),
+              android: responsiveHeight(8) + Math.max(insets.bottom, 10), // Ensure minimum padding
+              ios: responsiveHeight(11) + Math.max(insets.bottom, 10), // Ensure minimum padding
             }),
             alignSelf: 'center',
+            paddingBottom: Math.max(insets.bottom, 10), // Ensure minimum padding
+            paddingTop: 5, // Add some top padding
             //marginTop: -responsiveHeight(10),
             //borderRadius: 30,
             //marginBottom: 20,
@@ -214,10 +222,12 @@ const TabNavigator = () => {
             backgroundColor: '#FFFFFF',
             width: responsiveWidth(100),
             height: Platform.select({
-              android: responsiveHeight(8),
-              ios: responsiveHeight(11),
+              android: responsiveHeight(8) + Math.max(insets.bottom, 10),
+              ios: responsiveHeight(11) + Math.max(insets.bottom, 10),
             }),
             alignSelf: 'center',
+            paddingBottom: Math.max(insets.bottom, 10),
+            paddingTop: 5,
             //marginTop: -responsiveHeight(10),
             //borderRadius: 30,
             //marginBottom: 20,
@@ -244,10 +254,12 @@ const TabNavigator = () => {
             backgroundColor: '#FFFFFF',
             width: responsiveWidth(100),
             height: Platform.select({
-              android: responsiveHeight(8),
-              ios: responsiveHeight(11),
+              android: responsiveHeight(8) + Math.max(insets.bottom, 10),
+              ios: responsiveHeight(11) + Math.max(insets.bottom, 10),
             }),
             alignSelf: 'center',
+            paddingBottom: Math.max(insets.bottom, 10),
+            paddingTop: 5,
             //marginTop: -responsiveHeight(10),
             //borderRadius: 30,
             //marginBottom: 20,
@@ -274,10 +286,12 @@ const TabNavigator = () => {
             backgroundColor: '#FFFFFF',
             width: responsiveWidth(100),
             height: Platform.select({
-              android: responsiveHeight(8),
-              ios: responsiveHeight(11),
+              android: responsiveHeight(8) + Math.max(insets.bottom, 10),
+              ios: responsiveHeight(11) + Math.max(insets.bottom, 10),
             }),
             alignSelf: 'center',
+            paddingBottom: Math.max(insets.bottom, 10),
+            paddingTop: 5,
             //marginTop: -responsiveHeight(10),
             //borderRadius: 30,
             //marginBottom: 20,
@@ -304,10 +318,12 @@ const TabNavigator = () => {
             backgroundColor: '#FFFFFF',
             width: responsiveWidth(100),
             height: Platform.select({
-              android: responsiveHeight(8),
-              ios: responsiveHeight(11),
+              android: responsiveHeight(8) + Math.max(insets.bottom, 10),
+              ios: responsiveHeight(11) + Math.max(insets.bottom, 10),
             }),
             alignSelf: 'center',
+            paddingBottom: Math.max(insets.bottom, 10),
+            paddingTop: 5,
             //marginTop: -responsiveHeight(10),
             //borderRadius: 30,
             //marginBottom: 20,

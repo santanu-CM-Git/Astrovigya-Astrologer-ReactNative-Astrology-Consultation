@@ -1,9 +1,9 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 import CustomHeader from '../../components/CustomHeader';
 import { useNavigation } from '@react-navigation/native';
-
+import { SafeAreaView } from 'react-native-safe-area-context'
 export default function PrivacyPolicy({  }) {
     const navigation = useNavigation();
     return (

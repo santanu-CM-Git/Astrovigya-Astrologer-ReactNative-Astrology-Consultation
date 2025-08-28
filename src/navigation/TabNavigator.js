@@ -204,8 +204,8 @@ const TabNavigator = () => {
           },
           tabBarIcon: ({ color, size, focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', }}>
-              {focused && <View style={{ width: responsiveWidth(12), borderColor: color, backgroundColor: color, borderWidth: 2, borderBottomLeftRadius: 5, borderBottomRightRadius: 5 }} />}
-              <Image source={focused ? homeIconFocusedImg : homeIconImg} style={{ width: responsiveWidth(6.5), height: responsiveHeight(3.5), marginTop: responsiveHeight(0.2),marginBottom: responsiveHeight(1) }} />
+              {focused && <View style={{ width: responsiveWidth(12), borderColor: color, backgroundColor: color, borderWidth: 2, borderBottomLeftRadius: 5, borderBottomRightRadius: 5,marginTop:- responsiveHeight(0.5) }} />}
+              <Image source={focused ? homeIconFocusedImg : homeIconImg} style={{ width: responsiveWidth(6.5), height: responsiveHeight(3.5), marginTop: responsiveHeight(0.6),marginBottom: responsiveHeight(1) }} />
             </View>
           ),
           tabBarLabel: ({ color, focused }) => (
@@ -236,8 +236,8 @@ const TabNavigator = () => {
           },
           tabBarIcon: ({ color, size, focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', }}>
-              {focused && <View style={{ width: responsiveWidth(12), borderColor: color, backgroundColor: color, borderWidth: 2, borderBottomLeftRadius: 5, borderBottomRightRadius: 5 }} />}
-              <Image source={focused ? earningIconFocusedImg : earningIconImg} style={{ width: responsiveWidth(6.5), height: responsiveHeight(3.5),  marginTop: responsiveHeight(0.2),marginBottom: responsiveHeight(1) }} />
+              {focused && <View style={{ width: responsiveWidth(12), borderColor: color, backgroundColor: color, borderWidth: 2, borderBottomLeftRadius: 5, borderBottomRightRadius: 5,marginTop:- responsiveHeight(0.5) }} />}
+              <Image source={focused ? earningIconFocusedImg : earningIconImg} style={{ width: responsiveWidth(6.5), height: responsiveHeight(3.5),  marginTop: responsiveHeight(0.6),marginBottom: responsiveHeight(1) }} />
             </View>
           ),
           tabBarLabel: ({ color, focused }) => (
@@ -268,8 +268,8 @@ const TabNavigator = () => {
           },
           tabBarIcon: ({ color, size, focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', }}>
-              {focused && <View style={{ width: responsiveWidth(12), borderColor: color, backgroundColor: color, borderWidth: 2, borderBottomLeftRadius: 5, borderBottomRightRadius: 5 }} />}
-              <Image source={focused ? myserviceIconFocusedImg : myserviceIconImg} style={{ width: responsiveWidth(6), height: responsiveHeight(3.5),  marginTop: responsiveHeight(0.2),marginBottom: responsiveHeight(1) }} />
+              {focused && <View style={{ width: responsiveWidth(12), borderColor: color, backgroundColor: color, borderWidth: 2, borderBottomLeftRadius: 5, borderBottomRightRadius: 5,marginTop:- responsiveHeight(0.5) }} />}
+              <Image source={focused ? myserviceIconFocusedImg : myserviceIconImg} style={{ width: responsiveWidth(6), height: responsiveHeight(3.5),  marginTop: responsiveHeight(0.6),marginBottom: responsiveHeight(1) }} />
             </View>
           ),
           tabBarLabel: ({ color, focused }) => (
@@ -300,8 +300,8 @@ const TabNavigator = () => {
           },
           tabBarIcon: ({ color, size, focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', }}>
-              {focused && <View style={{ width: responsiveWidth(12), borderColor: color, backgroundColor: color, borderWidth: 2, borderBottomLeftRadius: 5, borderBottomRightRadius: 5 }} />}
-              <Image source={focused ? clientIconFocusedImg : clientIconImg} style={{ width: responsiveWidth(7.5), height: responsiveHeight(3.5),  marginTop: responsiveHeight(0.2),marginBottom: responsiveHeight(1) }} />
+              {focused && <View style={{ width: responsiveWidth(12), borderColor: color, backgroundColor: color, borderWidth: 0, borderBottomLeftRadius: 5, borderBottomRightRadius: 5,marginTop:- responsiveHeight(0.5) }} />}
+              <Image source={focused ? clientIconFocusedImg : clientIconImg} style={{ width: responsiveWidth(7.5), height: responsiveHeight(3.5),  marginTop: responsiveHeight(0.6),marginBottom: responsiveHeight(1) }} />
             </View>
           ),
           tabBarLabel: ({ color, focused }) => (
@@ -332,8 +332,8 @@ const TabNavigator = () => {
           },
           tabBarIcon: ({ color, size, focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center', }}>
-              {focused && <View style={{ width: responsiveWidth(12), borderColor: color, backgroundColor: color, borderWidth: 2, borderBottomLeftRadius: 5, borderBottomRightRadius: 5 }} />}
-              <Image source={focused ? availabilityIconFocusedImg : availabilityIconImg} style={{ width: responsiveWidth(6.5), height: responsiveHeight(3.5),  marginTop: responsiveHeight(0.2),marginBottom: responsiveHeight(1) }} />
+              {focused && <View style={{ width: responsiveWidth(12), borderColor: color, backgroundColor: color, borderWidth: 2, borderBottomLeftRadius: 5, borderBottomRightRadius: 5,marginTop:- responsiveHeight(0.5) }} />}
+              <Image source={focused ? availabilityIconFocusedImg : availabilityIconImg} style={{ width: responsiveWidth(6.5), height: responsiveHeight(3.5),  marginTop: responsiveHeight(0.6),marginBottom: responsiveHeight(1) }} />
             </View>
           ),
           tabBarLabel: ({ color, focused }) => (

@@ -10,7 +10,8 @@ import {
   Image,
   StatusBar,
   Platform,
-  Keyboard
+  Keyboard,
+  SafeAreaView
 } from 'react-native';
 import axios from 'axios';
 import CheckBox from '@react-native-community/checkbox';
@@ -29,7 +30,6 @@ import { orImg } from '../../utils/Images';
 import Toast from 'react-native-toast-message';
 import { withTranslation, useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native'; 
-import { SafeAreaView } from 'react-native-safe-area-context'
 const BannerWidth = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(BannerWidth * 0.7)
 const { height, width } = Dimensions.get('screen')
